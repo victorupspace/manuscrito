@@ -7,6 +7,9 @@ export const metadata = {
   title: "Backoffice — Manuscrito",
 };
 
+// Lê o cookie de sessão admin para redirecionar quem já está logado.
+export const dynamic = "force-dynamic";
+
 export default async function BackofficeLoginPage() {
   const session = await getBackofficeSession();
   if (session) {

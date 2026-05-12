@@ -9,6 +9,10 @@ export const metadata = {
   title: "Backoffice — Manuscrito",
 };
 
+// Layout protegido — todas as páginas filhas dependem de `cookies()` para
+// validar a sessão admin, portanto precisam de renderização dinâmica.
+export const dynamic = "force-dynamic";
+
 export default async function BackofficeAuthenticatedLayout({
   children,
 }: {

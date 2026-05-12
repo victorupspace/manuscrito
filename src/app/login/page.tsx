@@ -10,6 +10,10 @@ export const metadata = {
     "Acesse sua conta aprovada e continue organizando suas histórias, livros, contos e projetos de escrita.",
 };
 
+// Lê cookies Supabase para detectar usuários já logados → não pode ser
+// pré-renderizada estaticamente.
+export const dynamic = "force-dynamic";
+
 type LoginRouteProps = {
   searchParams?: Promise<{ reason?: string }>;
 };
