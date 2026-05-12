@@ -1,14 +1,25 @@
 import { z } from "zod";
+
 import { DOCUMENT_NODE_TYPES } from "@/constants/document-node-types";
 
-export const documentNodeSchema = z.object({
-  projectId: z.string().min(1),
-  parentId: z.string().min(1).nullable().optional(),
+export const documentNodeCreateSchema = z.object({
+  projectId: z.string().uuid(),
+  parentId: z.string().uuid().nullable().optional(),
   type: z.enum(DOCUMENT_NODE_TYPES),
-  title: z.string().trim().min(1).max(180),
-  summary: z.string().trim().max(2000).nullable().optional(),
-  orderIndex: z.number().int().nonnegative(),
-  status: z.enum(["draft", "revising", "done", "archived"]).default("draft"),
+  title: z.string().trim().min(1, "Informe um título.").max(160),
 });
 
-export type DocumentNodeInput = z.infer<typeof documentNodeSchema>;
+export const documentNodeSaveSchema = z.object({
+  documentNodeId: z.string().uuid(),
+  projectId: z.string().uuid(),
+  title: z.string().trim().min(1, "Informe um título.").max(160),
+  contentJson: z.unknown().nullable(),
+  contentHtml: z.string(),
+  plainText: z.string(),
+  notes: z.string().nullable().optional(),
+  status: z.enum(["draft", "in_review", "completed", "archived"]).optional(),
+  targetWords: z.number().int().positive().nullable().optional(),
+});
+
+export type DocumentNodeCreateInput = z.infer<typeof documentNodeCreateSchema>;
+export type DocumentNodeSaveInput = z.infer<typeof documentNodeSaveSchema>;

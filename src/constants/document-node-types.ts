@@ -4,6 +4,8 @@ export const DOCUMENT_NODE_TYPES = [
   "scene",
   "note",
   "research",
+  "draft",
+  "short_story_main",
 ] as const;
 
 export type DocumentNodeType = (typeof DOCUMENT_NODE_TYPES)[number];

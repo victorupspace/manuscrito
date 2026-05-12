@@ -200,6 +200,60 @@
     content: attr(data-placeholder);
   }
 
+  .manuscrito-editor {
+    @apply min-h-[62dvh] w-full font-serif text-[1.12rem] leading-8 text-brand-carvao outline-none sm:text-[1.2rem] sm:leading-9;
+  }
+
+  .manuscrito-editor .ProseMirror {
+    @apply min-h-[62dvh] outline-none;
+  }
+
+  .manuscrito-editor .ProseMirror p {
+    @apply my-5;
+  }
+
+  .manuscrito-editor .ProseMirror h1 {
+    @apply mb-6 mt-10 font-serif text-[2rem] font-semibold leading-tight text-brand-carvao;
+  }
+
+  .manuscrito-editor .ProseMirror h2 {
+    @apply mb-5 mt-9 font-serif text-[1.65rem] font-semibold italic leading-tight text-brand-bordo;
+  }
+
+  .manuscrito-editor .ProseMirror h3 {
+    @apply mb-4 mt-7 font-serif text-[1.35rem] font-semibold leading-snug text-brand-carvao;
+  }
+
+  .manuscrito-editor .ProseMirror blockquote {
+    @apply my-7 border-l-2 border-brand-bordo/35 pl-5 font-serif italic text-brand-tinta;
+  }
+
+  .manuscrito-editor .ProseMirror ul,
+  .manuscrito-editor .ProseMirror ol {
+    @apply my-5 pl-7;
+  }
+
+  .manuscrito-editor .ProseMirror li {
+    @apply my-1.5;
+  }
+
+  .manuscrito-editor .ProseMirror hr {
+    @apply my-10 border-0 border-t border-brand-bordo/15;
+  }
+
+  .manuscrito-editor .ProseMirror a {
+    @apply text-brand-bordo underline decoration-brand-bordo/30 underline-offset-4;
+  }
+
+  .manuscrito-editor .ProseMirror p.is-editor-empty:first-child::before {
+    @apply pointer-events-none float-left h-0 font-serif italic text-brand-tinta/40;
+    content: attr(data-placeholder);
+  }
+
+  .manuscrito-editor .ProseMirror ::selection {
+    background: color-mix(in oklab, var(--brand-bordo) 18%, transparent);
+  }
+
   /* Manuscrito · Utilitários editoriais (VBL) */
   .brand-smallcaps {
     font-variant-caps: all-small-caps;

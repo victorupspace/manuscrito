@@ -10,6 +10,7 @@ export type SyncStatus =
   | "saved-local"
   | "syncing"
   | "synced"
+  | "offline"
   | "error";
 
 export type UserProfile = {
@@ -26,18 +27,19 @@ export type Project = {
   title: string;
   description: string | null;
   type: ProjectType;
-  language: SupportedLanguage;
+  language?: SupportedLanguage;
   targetWords: number | null;
   deadline: ISODateString | null;
   createdAt: ISODateString;
   updatedAt: ISODateString;
 };
 
-export type DocumentStatus = "draft" | "revising" | "done" | "archived";
+export type DocumentStatus = "draft" | "in_review" | "completed" | "archived";
 
 export type DocumentNode = {
   id: string;
   projectId: string;
+  userId?: string;
   parentId: string | null;
   type: DocumentNodeType;
   title: string;
@@ -48,6 +50,12 @@ export type DocumentNode = {
   orderIndex: number;
   status: DocumentStatus;
   wordCount: number;
+  characterCount?: number;
+  readingTime?: number;
+  targetWords?: number | null;
+  notes?: string | null;
+  lastSavedAt?: ISODateString | null;
+  lastSyncedAt?: ISODateString | null;
   createdAt: ISODateString;
   updatedAt: ISODateString;
 };

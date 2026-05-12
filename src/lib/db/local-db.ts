@@ -55,6 +55,18 @@ export class ManuscritoLocalDatabase extends Dexie {
       writingSessions: "id, projectId, documentNodeId, startedAt",
       syncQueue: "id, entity, entityId, operation, createdAt",
     });
+
+    this.version(2).stores({
+      projects: "id, userId, type, language, updatedAt",
+      documentNodes:
+        "id, projectId, parentId, type, status, orderIndex, updatedAt, lastSavedAt, lastSyncedAt",
+      characters: "id, projectId, name, updatedAt",
+      locations: "id, projectId, name, updatedAt",
+      researchItems: "id, projectId, type, *tags, updatedAt",
+      writingGoals: "id, projectId, deadline, updatedAt",
+      writingSessions: "id, projectId, documentNodeId, startedAt",
+      syncQueue: "id, entity, entityId, operation, createdAt",
+    });
   }
 }
 
