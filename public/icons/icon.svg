@@ -1,6 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
-  <title id="title">Manuscrito</title>
-  <rect width="512" height="512" rx="96" fill="#f7f5ef"/>
-  <path d="M154 128h204c22 0 40 18 40 40v176c0 22-18 40-40 40H154c-22 0-40-18-40-40V168c0-22 18-40 40-40Z" fill="#ffffff" stroke="#d9d3c6" stroke-width="16"/>
-  <path d="M174 190h164M174 246h164M174 302h116" stroke="#262626" stroke-width="22" stroke-linecap="round"/>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 512"
+  role="img"
+  aria-labelledby="manuscrito-icon-title"
+>
+  <title id="manuscrito-icon-title">Manuscrito</title>
+  <!-- Fundo vinho (brand-bordo) com cantos arredondados — segue o radius do
+       sistema (≈ ⅙ do lado). -->
+  <rect width="512" height="512" rx="96" fill="#6b1f2e" />
+
+  <!-- Profundidade muito sutil — gradiente diagonal que reforça o
+       sentimento de profundidade (igual ao card da landing). -->
+  <defs>
+    <radialGradient id="vignette" cx="30%" cy="0%" r="120%">
+      <stop offset="0%" stop-color="#f5f1e8" stop-opacity="0.08" />
+      <stop offset="55%" stop-color="#6b1f2e" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#vignette)" />
+
+  <!-- Marca: 'M' em itálico serif (EB Garamond / Garamond), creme marfim.
+       Pesos e tamanhos calibrados para legibilidade até 16×16. -->
+  <text
+    x="50%"
+    y="56%"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="'EB Garamond', 'Garamond', 'Cormorant Garamond', 'Times New Roman', serif"
+    font-style="italic"
+    font-weight="500"
+    font-size="380"
+    fill="#f5f1e8"
+    letter-spacing="-12"
+  >M</text>
+
+  <!-- Filete decorativo abaixo do 'M' — guarda registro tipográfico
+       do sistema sem competir com o glifo. -->
+  <rect x="200" y="430" width="112" height="6" rx="3" fill="#f5f1e8" opacity="0.55" />
 </svg>

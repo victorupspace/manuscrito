@@ -45,10 +45,25 @@ export const metadata: Metadata = {
     "Ferramenta brasileira para autores que querem estruturar livros, contos, capítulos, cenas, notas e pesquisas com foco, clareza e segurança.",
   applicationName: "Manuscrito",
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icons/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
+  },
 };
 
+/**
+ * `themeColor` pinta a barra de URL no mobile e a splash do PWA.
+ * - Light: creme do dashboard (cor predominante no app).
+ * - Dark: vinho da marca (mantém identidade quando o sistema está em dark).
+ */
 export const viewport: Viewport = {
-  themeColor: "#ece6d3",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ece6d3" },
+    { media: "(prefers-color-scheme: dark)", color: "#6b1f2e" },
+  ],
 };
 
 export default function RootLayout({
