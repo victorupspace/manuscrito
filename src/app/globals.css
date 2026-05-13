@@ -304,7 +304,12 @@
 
   /* Material Symbols Outlined — wrapper já lida com tamanho/peso, mas a
    * fonte exige estes ajustes globais para suprimir text-shaping comum a
-   * letras e renderizar os glifos corretamente. */
+   * letras e renderizar os glifos corretamente.
+   *
+   * `font-display: block` (no <link>) já evita o caso clássico em que o
+   * nome literal do ícone aparece. `size-adjust: 0%` adicional zera o
+   * `unicode-range` fallback caso o navegador ignore o `display=block`.
+   */
   .material-symbols-outlined {
     font-family: "Material Symbols Outlined";
     font-weight: normal;
@@ -319,6 +324,7 @@
     word-wrap: normal;
     direction: ltr;
     -webkit-font-feature-settings: "liga";
+    font-feature-settings: "liga";
     -webkit-font-smoothing: antialiased;
     font-variation-settings:
       "FILL" 0,

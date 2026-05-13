@@ -77,10 +77,16 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Cossette+Texte:wght@400;700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
         />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        {/*
+         * `display=block` para os ícones: o browser espera (até ~3s) pela
+         * fonte antes de mostrar qualquer coisa, evitando o caso em que o
+         * nome literal do ícone (ex.: "library_books") aparece no lugar do
+         * glifo. Usar `swap` ou `optional` quebra a UI dos ícones.
+         */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font, @next/next/google-font-display */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=optional"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&display=block"
         />
       </head>
       <body className="flex min-h-full flex-col font-ui">
