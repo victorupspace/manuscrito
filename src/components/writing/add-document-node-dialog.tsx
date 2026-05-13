@@ -9,10 +9,13 @@ import type { WritingProject } from "@/types/writing";
 import type { DocumentNodeType } from "@/constants/document-node-types";
 
 const OPTIONS: Array<{ type: DocumentNodeType; label: string }> = [
+  { type: "part", label: "Parte" },
   { type: "chapter", label: "Capítulo" },
   { type: "scene", label: "Cena" },
   { type: "note", label: "Nota" },
-  { type: "draft", label: "Documento" },
+  { type: "research", label: "Pesquisa" },
+  { type: "draft", label: "Rascunho" },
+  { type: "document", label: "Documento" },
 ];
 
 export function AddDocumentNodeDialog({

@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { LogOut } from "lucide-react";
 
+import { BrandWordmark } from "@/components/brand/brand-wordmark";
+import { Icon } from "@/components/ui/icon";
 import { logoutUserAction } from "@/features/auth/actions/logout-user";
 import type { ApprovedUserProfile } from "@/lib/auth/require-approved-user";
 import {
@@ -10,65 +11,60 @@ import {
 
 export function PlatformSidebar({ profile }: { profile: ApprovedUserProfile }) {
   return (
-    <aside className="sticky top-0 hidden h-dvh border-r border-brand-bordo/10 bg-brand-creme/55 px-5 py-6 lg:flex lg:flex-col">
-      <Link href="/plataforma" className="group block">
-        <span className="font-serif text-[1.65rem] italic leading-none text-brand-carvao transition-colors group-hover:text-brand-bordo">
-          Manuscrito
-        </span>
-        <span className="mt-1 block font-serif text-[0.62rem] uppercase tracking-[0.32em] text-brand-tinta">
-          Estúdio de escrita
-        </span>
-      </Link>
+    <aside className="sticky top-0 hidden h-dvh border-r border-border-subtle bg-surface-1 px-5 py-6 lg:flex lg:flex-col">
+      <BrandWordmark href="/plataforma" tone="brand" size="sm" />
 
-      <nav className="mt-10 space-y-1" aria-label="Navegação principal">
-        {PLATFORM_NAVIGATION.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="group flex items-center gap-3 rounded-md px-3 py-2.5 font-serif text-[0.95rem] text-brand-tinta transition-colors hover:bg-brand-marfim hover:text-brand-bordo focus-visible:ring-2 focus-visible:ring-brand-bordo/30 focus-visible:outline-none"
-            >
-              <Icon className="size-4 text-brand-bordo/65 transition-colors group-hover:text-brand-bordo" />
-              {item.label}
-            </Link>
-          );
-        })}
+      <nav className="mt-10 space-y-0.5" aria-label="Navegação principal">
+        {PLATFORM_NAVIGATION.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="group flex items-center gap-3 rounded-md px-3 py-2.5 text-[0.92rem] text-text-secondary transition-colors hover:bg-surface-3 hover:text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          >
+            <Icon
+              name={item.icon}
+              opticalSize={20}
+              className="text-[20px] text-text-muted transition-colors group-hover:text-brand-primary"
+            />
+            {item.label}
+          </Link>
+        ))}
       </nav>
 
       <div className="mt-auto space-y-4">
-        <div className="rounded-md border border-brand-bordo/10 bg-brand-marfim/70 p-4">
-          <p className="font-serif text-[0.7rem] uppercase tracking-[0.26em] text-brand-tinta/70">
+        <div className="rounded-md border border-border-subtle bg-surface-2 p-4 shadow-xs">
+          <p className="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-text-muted">
             Conta
           </p>
-          <p className="mt-2 truncate font-serif text-[0.98rem] text-brand-carvao">
+          <p className="mt-2 truncate text-[0.95rem] font-bold text-text-primary">
             {profile.fullName}
           </p>
-          <p className="mt-0.5 truncate font-serif text-[0.8rem] text-brand-tinta">
+          <p className="mt-0.5 truncate text-[0.82rem] text-text-secondary">
             {profile.email}
           </p>
         </div>
 
-        <nav className="space-y-1" aria-label="Navegação secundária">
-          {PLATFORM_SECONDARY_NAVIGATION.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-3 rounded-md px-3 py-2 font-serif text-[0.9rem] text-brand-tinta transition-colors hover:bg-brand-marfim hover:text-brand-bordo focus-visible:ring-2 focus-visible:ring-brand-bordo/30 focus-visible:outline-none"
-              >
-                <Icon className="size-4" />
-                {item.label}
-              </Link>
-            );
-          })}
+        <nav className="space-y-0.5" aria-label="Navegação secundária">
+          {PLATFORM_SECONDARY_NAVIGATION.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex items-center gap-3 rounded-md px-3 py-2 text-[0.88rem] text-text-secondary transition-colors hover:bg-surface-3 hover:text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            >
+              <Icon
+                name={item.icon}
+                opticalSize={20}
+                className="text-[20px]"
+              />
+              {item.label}
+            </Link>
+          ))}
           <form action={logoutUserAction}>
             <button
               type="submit"
-              className="flex w-full items-center gap-3 rounded-md px-3 py-2 font-serif text-[0.9rem] text-brand-tinta transition-colors hover:bg-brand-marfim hover:text-brand-bordo focus-visible:ring-2 focus-visible:ring-brand-bordo/30 focus-visible:outline-none"
+              className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-[0.88rem] text-text-secondary transition-colors hover:bg-surface-3 hover:text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
-              <LogOut className="size-4" />
+              <Icon name="logout" opticalSize={20} className="text-[20px]" />
               Sair
             </button>
           </form>

@@ -17,9 +17,37 @@ export const documentNodeSaveSchema = z.object({
   contentHtml: z.string(),
   plainText: z.string(),
   notes: z.string().nullable().optional(),
-  status: z.enum(["draft", "in_review", "completed", "archived"]).optional(),
+  status: z
+    .enum([
+      "idea",
+      "draft",
+      "in_progress",
+      "in_review",
+      "review",
+      "completed",
+      "archived",
+    ])
+    .optional(),
   targetWords: z.number().int().positive().nullable().optional(),
+});
+
+export const documentOrderSchema = z.object({
+  projectId: z.string().uuid(),
+  orderedNodeIds: z.array(z.string().uuid()).min(1),
+});
+
+export const documentArchiveSchema = z.object({
+  documentNodeId: z.string().uuid(),
+  projectId: z.string().uuid(),
+});
+
+export const documentSynopsisSchema = z.object({
+  documentNodeId: z.string().uuid(),
+  synopsis: z.string().trim().max(2400).nullable().optional(),
 });
 
 export type DocumentNodeCreateInput = z.infer<typeof documentNodeCreateSchema>;
 export type DocumentNodeSaveInput = z.infer<typeof documentNodeSaveSchema>;
+export type DocumentOrderInput = z.infer<typeof documentOrderSchema>;
+export type DocumentArchiveInput = z.infer<typeof documentArchiveSchema>;
+export type DocumentSynopsisInput = z.infer<typeof documentSynopsisSchema>;

@@ -45,13 +45,13 @@ export function LandingPage() {
         {/* Card com glass effect + microcopy de login abaixo */}
         <div className="relative flex w-full max-w-md flex-col gap-5">
         <div
-          className="brand-glass relative w-full rounded-md px-7 py-9 sm:px-9 sm:py-10"
+          className="brand-glass relative w-full rounded-lg px-6 py-8 sm:px-8 sm:py-9"
           data-state={submitted ? "success" : "form"}
         >
           {/* Ornamento de página de rosto */}
           <div
             aria-hidden
-            className="mb-6 flex items-center justify-center gap-3 text-brand-marfim/55"
+            className="mb-6 flex items-center justify-center gap-3 text-brand-bordo/35"
           >
             <span className="h-px w-8 bg-current opacity-60" />
             <span className="text-[0.6rem] uppercase tracking-[0.4em]">

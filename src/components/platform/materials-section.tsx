@@ -28,38 +28,53 @@ export function MaterialsSection({
   error?: string;
 }) {
   const [filter, setFilter] = useState<Filter>("all");
+  const [deletedProjectIds, setDeletedProjectIds] = useState<Set<string>>(
+    () => new Set(),
+  );
 
   const filteredProjects = useMemo(() => {
-    if (filter === "all") return projects;
-    return projects.filter((project) => project.type === filter);
-  }, [filter, projects]);
+    const visibleProjects = projects.filter(
+      (project) => !deletedProjectIds.has(project.id),
+    );
+
+    if (filter === "all") return visibleProjects;
+    return visibleProjects.filter((project) => project.type === filter);
+  }, [deletedProjectIds, filter, projects]);
+
+  function handleDeleted(projectId: string) {
+    setDeletedProjectIds((current) => {
+      const next = new Set(current);
+      next.add(projectId);
+      return next;
+    });
+  }
 
   return (
     <section id="materiais" className="space-y-5">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="font-serif text-[0.7rem] uppercase tracking-[0.3em] text-brand-tinta/70">
+          <p className="text-[0.7rem] font-bold uppercase tracking-[0.18em] text-text-muted">
             Biblioteca
           </p>
-          <h2 className="mt-1 font-serif text-[1.7rem] italic text-brand-bordo">
+          <h2 className="mt-1 text-[1.5rem] font-bold tracking-tight text-text-primary">
             Seus materiais
           </h2>
-          <p className="mt-1 font-serif text-[0.96rem] text-brand-tinta">
+          <p className="mt-1 text-[0.94rem] text-text-secondary">
             Organize livros, contos e rascunhos em um só lugar.
           </p>
         </div>
 
-        <div className="flex overflow-x-auto rounded-md border border-brand-bordo/10 bg-brand-creme/60 p-1">
+        <div className="flex overflow-x-auto rounded-md border border-border-subtle bg-surface-2 p-1">
           {FILTERS.map((item) => (
             <button
               key={item.id}
               type="button"
               onClick={() => setFilter(item.id)}
               className={cn(
-                "h-9 shrink-0 rounded-sm px-3 font-serif text-[0.86rem] transition-colors focus-visible:ring-2 focus-visible:ring-brand-bordo/30 focus-visible:outline-none",
+                "h-9 shrink-0 rounded-sm px-3 text-[0.85rem] transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
                 filter === item.id
-                  ? "bg-brand-bordo text-brand-marfim"
-                  : "text-brand-tinta hover:bg-brand-marfim hover:text-brand-bordo",
+                  ? "bg-brand-primary font-bold text-text-on-brand"
+                  : "text-text-secondary hover:bg-surface-1 hover:text-text-primary",
               )}
             >
               {item.label}
@@ -69,13 +84,11 @@ export function MaterialsSection({
       </div>
 
       {error ? (
-        <div className="rounded-md border border-brand-bordo/20 bg-brand-creme/60 p-5">
-          <p className="font-serif text-[0.78rem] uppercase tracking-[0.24em] text-brand-bordo">
+        <div className="rounded-md border border-destructive/30 bg-surface-muted p-5">
+          <p className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-destructive">
             Falha ao carregar materiais
           </p>
-          <p className="mt-2 font-serif text-[0.95rem] text-brand-tinta">
-            {error}
-          </p>
+          <p className="mt-2 text-[0.92rem] text-text-secondary">{error}</p>
         </div>
       ) : filteredProjects.length === 0 ? (
         <EmptyState
@@ -88,7 +101,12 @@ export function MaterialsSection({
       ) : (
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
           {filteredProjects.map((project, index) => (
-            <MaterialCard key={project.id} project={project} index={index} />
+            <MaterialCard
+              key={project.id}
+              project={project}
+              index={index}
+              onDeleted={handleDeleted}
+            />
           ))}
         </div>
       )}

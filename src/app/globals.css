@@ -4,15 +4,39 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─────────────────────────────────────────────────────────────────────────
+ * Design tokens · Manuscrito Visual System v2 (2026-05)
+ *
+ * Mudança de direção
+ * ──────────────────
+ * v1 = literário/editorial: muito itálico, font-serif em toda UI, surfaces
+ * quase brancas, contraste baixo.
+ *
+ * v2 = SaaS premium com personalidade serifada brasileira:
+ *  - Cossette Texte para 100% do dashboard (ver `--font-ui`).
+ *  - Inter para números densos (`--font-num`).
+ *  - EB Garamond mantido apenas no editor de escrita longa.
+ *  - Surfaces em escala creme escurecido (não branco) — 4 níveis.
+ *  - Tokens semânticos (background, card, surface-1..3, etc) que vivem
+ *    sobre a paleta de brand.
+ *  - Shadows mais comportadas (4 níveis funcionais).
+ *  - Italic apenas no editor; eliminado do dashboard.
+ * ─────────────────────────────────────────────────────────────────────── */
+
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-writing: var(--font-serif);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-serif);
+  /* Tipografia ----------------------------------------------------------- */
+  --font-ui:
+    "Cossette Texte", "Plus Jakarta Sans", ui-serif, Georgia, serif;
+  --font-num:
+    "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-serif: var(--font-serif);
-  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+  --font-writing: var(--font-serif);
+  --font-display: var(--font-ui);
+  --font-heading: var(--font-ui);
+
+  /* Brand legado preservado --------------------------------------------- */
   --color-brand-marfim: var(--brand-marfim);
   --color-brand-creme: var(--brand-creme);
   --color-brand-pergaminho: var(--brand-pergaminho);
@@ -24,35 +48,66 @@
   --color-brand-bordo-profundo: var(--brand-bordo-profundo);
   --color-brand-dourado: var(--brand-dourado);
   --color-brand-sepia: var(--brand-sepia);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
+
+  /* Tokens semânticos — superfícies ------------------------------------ */
+  --color-surface-0: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-overlay: var(--surface-overlay);
+
+  /* Tokens semânticos — bordas ----------------------------------------- */
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
+
+  /* Tokens semânticos — texto ----------------------------------------- */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-on-brand: var(--text-on-brand);
+
+  /* Tokens semânticos — marca interativa --------------------------------- */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-hover: var(--brand-primary-hover);
+  --color-brand-primary-active: var(--brand-primary-active);
+  --color-brand-primary-soft: var(--brand-primary-soft);
+
+  /* Tokens shadcn que continuam em uso ---------------------------------- */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -60,10 +115,17 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Shadows funcionais ------------------------------------------------- */
+  --shadow-xs: var(--elev-xs);
+  --shadow-sm: var(--elev-sm);
+  --shadow-md: var(--elev-md);
+  --shadow-lg: var(--elev-lg);
+  --shadow-xl: var(--elev-xl);
 }
 
 :root {
-  /* Manuscrito · Visual Brand Language — paleta institucional */
+  /* Brand legado (cores absolutas) -------------------------------------- */
   --brand-marfim: #f5f1e8;
   --brand-creme: #ede7d6;
   --brand-pergaminho: #e8dfc8;
@@ -76,41 +138,95 @@
   --brand-dourado: #8b7355;
   --brand-sepia: #7a5c3e;
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  /* Surfaces — escala creme escurecido (v2) ---------------------------- *
+   * surface-0  background base (mais escuro que o v1)
+   * surface-1  cards principais — perceptivelmente mais claros que o fundo
+   * surface-2  cards elevados, dropdowns, popovers
+   * surface-3  estados ativos, navegação selecionada
+   * surface-muted  blocos secundários, empty states
+   * surface-elevated  modais e dialogs
+   * surface-overlay  overlays sobre vinho (glass)                       */
+  --surface-0: #ece6d3;
+  --surface-1: #f3eedc;
+  --surface-2: #f8f3e3;
+  --surface-3: #e4dcc4;
+  --surface-muted: #e7e0cc;
+  --surface-elevated: #fbf6e8;
+  --surface-overlay: rgba(245, 241, 232, 0.92);
+
+  /* Bordas — escala que aparece sobre creme ---------------------------- */
+  --border-subtle: rgba(31, 27, 22, 0.08);
+  --border-default: rgba(31, 27, 22, 0.14);
+  --border-strong: rgba(31, 27, 22, 0.22);
+
+  /* Texto — contraste WCAG AA mínimo sobre surface-0 ------------------- */
+  --text-primary: #1f1b16; /* sobre surface-0: 12.4:1 */
+  --text-secondary: #4a443e; /* sobre surface-0: 7.9:1 */
+  --text-muted: #6a635a; /* sobre surface-0: 4.6:1 */
+  --text-on-brand: #f5f1e8; /* sobre bordo: 10.1:1 */
+
+  /* Marca interativa --------------------------------------------------- */
+  --brand-primary: #6b1f2e;
+  --brand-primary-hover: #5a1a26;
+  --brand-primary-active: #4a1620;
+  --brand-primary-soft: rgba(107, 31, 46, 0.08);
+
+  /* Elevações — sombras quentes, suaves, com camada de cor ------------- */
+  --elev-xs: 0 1px 2px rgba(31, 27, 22, 0.06);
+  --elev-sm:
+    0 1px 2px rgba(31, 27, 22, 0.06),
+    0 2px 6px -2px rgba(31, 27, 22, 0.08);
+  --elev-md:
+    0 4px 10px -4px rgba(31, 27, 22, 0.12),
+    0 10px 20px -8px rgba(31, 27, 22, 0.1);
+  --elev-lg:
+    0 8px 16px -6px rgba(31, 27, 22, 0.14),
+    0 20px 36px -16px rgba(31, 27, 22, 0.18);
+  --elev-xl:
+    0 14px 28px -10px rgba(31, 27, 22, 0.18),
+    0 36px 64px -32px rgba(31, 27, 22, 0.28);
+
+  /* Tokens shadcn — agora ancorados nos semânticos ----------------------- */
+  --background: var(--surface-0);
+  --foreground: var(--text-primary);
+  --card: var(--surface-1);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-2);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--text-on-brand);
+  --secondary: var(--surface-muted);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--surface-muted);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--surface-3);
+  --accent-foreground: var(--text-primary);
+  --destructive: #b3261e;
+  --border: var(--border-default);
+  --input: var(--border-default);
+  --ring: rgba(107, 31, 46, 0.45);
+
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  --sidebar: var(--surface-1);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: var(--brand-primary);
+  --sidebar-primary-foreground: var(--text-on-brand);
+  --sidebar-accent: var(--surface-3);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--border-subtle);
+  --sidebar-ring: var(--ring);
+
+  /* Charts — manter neutros ate definir paleta de visualização -------- */
+  --chart-1: var(--brand-bordo);
+  --chart-2: var(--brand-dourado);
+  --chart-3: var(--brand-sepia);
+  --chart-4: var(--brand-grafite);
+  --chart-5: var(--brand-cinza);
 }
 
 .dark {
+  /* Dark mode permanece como fallback shadcn — não é alvo da v2. */
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -129,19 +245,6 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
@@ -150,10 +253,78 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-ui);
+    font-feature-settings:
+      "ss01" on,
+      "kern" on;
     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   html {
-    @apply font-sans;
+    font-family: var(--font-ui);
+  }
+
+  /* Heading defaults — sem itálico, hierarquia consistente ----------- */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    color: var(--text-primary);
+  }
+
+  /* Inputs herdam a fonte do sistema (Tailwind reseta para sans) ----- */
+  input,
+  textarea,
+  select,
+  button {
+    font-family: var(--font-ui);
+  }
+}
+
+@layer utilities {
+  .font-ui {
+    font-family: var(--font-ui);
+  }
+  .font-num {
+    font-family: var(--font-num);
+    font-feature-settings:
+      "tnum" on,
+      "lnum" on;
+    letter-spacing: -0.01em;
+  }
+  .font-writing {
+    font-family: var(--font-writing);
+  }
+
+  /* Material Symbols Outlined — wrapper já lida com tamanho/peso, mas a
+   * fonte exige estes ajustes globais para suprimir text-shaping comum a
+   * letras e renderizar os glifos corretamente. */
+  .material-symbols-outlined {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+    font-variation-settings:
+      "FILL" 0,
+      "wght" 400,
+      "GRAD" 0,
+      "opsz" 24;
   }
 }
 
@@ -162,6 +333,7 @@
     @apply mx-auto w-full max-w-3xl px-4 py-6 sm:px-6;
   }
 
+  /* Editor — preservado em EB Garamond para escrita longa ------------ */
   .longform-editor {
     @apply min-h-[60dvh] w-full text-[1.0625rem] leading-8 text-foreground outline-none;
     font-family: var(--font-writing);
@@ -254,7 +426,19 @@
     background: color-mix(in oklab, var(--brand-bordo) 18%, transparent);
   }
 
-  /* Manuscrito · Utilitários editoriais (VBL) */
+  /* Glass-card preservado para uso sobre vinho (auth e marketing) ---- */
+  .brand-glass {
+    background: var(--surface-overlay);
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+    border: 1px solid color-mix(in oklab, #f5f1e8 22%, transparent);
+    box-shadow:
+      0 1px 0 color-mix(in oklab, #f5f1e8 18%, transparent) inset,
+      0 24px 60px -28px rgb(0 0 0 / 0.55),
+      0 8px 24px -16px rgb(0 0 0 / 0.4);
+  }
+
+  /* Utilitários editoriais — preservados, mas não usados no dashboard */
   .brand-smallcaps {
     font-variant-caps: all-small-caps;
     letter-spacing: 0.18em;
@@ -281,17 +465,5 @@
     height: 1px;
     background: currentColor;
     opacity: 0.7;
-  }
-
-  /* Glass-card refinado sobre fundo vinho */
-  .brand-glass {
-    background: color-mix(in oklab, #f5f1e8 10%, transparent);
-    backdrop-filter: blur(18px) saturate(120%);
-    -webkit-backdrop-filter: blur(18px) saturate(120%);
-    border: 1px solid color-mix(in oklab, #f5f1e8 22%, transparent);
-    box-shadow:
-      0 1px 0 color-mix(in oklab, #f5f1e8 18%, transparent) inset,
-      0 24px 60px -28px rgb(0 0 0 / 0.55),
-      0 8px 24px -16px rgb(0 0 0 / 0.4);
   }
 }

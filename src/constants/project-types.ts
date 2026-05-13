@@ -1,5 +1,3 @@
-import { BookOpen, Feather, FileText, type LucideIcon } from "lucide-react";
-
 export const PROJECT_TYPES = ["short_story", "book", "draft"] as const;
 
 export type ProjectType = (typeof PROJECT_TYPES)[number];
@@ -18,17 +16,21 @@ export const PROJECT_TYPE_DESCRIPTIONS: Record<ProjectType, string> = {
     "Para ideias soltas, cenas iniciais, anotações e materiais ainda em formação.",
 };
 
-export const PROJECT_TYPE_ICONS: Record<ProjectType, LucideIcon> = {
-  short_story: Feather,
-  book: BookOpen,
-  draft: FileText,
+/**
+ * Nomes do Material Symbols Outlined para cada tipo de projeto.
+ * Catálogo: https://fonts.google.com/icons
+ */
+export const PROJECT_TYPE_ICONS: Record<ProjectType, string> = {
+  short_story: "edit_note",
+  book: "menu_book",
+  draft: "draft",
 };
 
 export const PROJECT_TYPE_OPTIONS: Array<{
   id: ProjectType;
   label: string;
   description: string;
-  icon: LucideIcon;
+  icon: string;
   accent: string;
   enabled: boolean;
 }> = [
@@ -37,7 +39,7 @@ export const PROJECT_TYPE_OPTIONS: Array<{
     label: PROJECT_TYPE_LABELS.short_story,
     description: PROJECT_TYPE_DESCRIPTIONS.short_story,
     icon: PROJECT_TYPE_ICONS.short_story,
-    accent: "text-brand-bordo",
+    accent: "text-brand-primary",
     enabled: true,
   },
   {

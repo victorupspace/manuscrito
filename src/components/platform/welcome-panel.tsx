@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, PenLine } from "lucide-react";
 
+import { Icon } from "@/components/ui/icon";
 import { NewProjectDialog } from "@/components/platform/new-project-dialog";
 
 export function WelcomePanel({ firstName }: { firstName: string }) {
@@ -14,35 +14,37 @@ export function WelcomePanel({ firstName }: { firstName: string }) {
       initial={reducedMotion ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
-      className="relative overflow-hidden rounded-lg border border-brand-bordo/10 bg-brand-creme p-6 shadow-[0_28px_80px_-58px_rgba(31,27,22,0.65)] sm:p-8"
+      className="relative overflow-hidden rounded-lg border border-border-subtle bg-surface-1 p-6 shadow-sm sm:p-8"
     >
-      <span
-        aria-hidden
-        className="absolute -right-8 -bottom-16 hidden font-serif text-[15rem] italic leading-none text-brand-bordo/[0.055] select-none md:block"
-      >
-        M
-      </span>
       <div className="relative max-w-3xl">
-        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-bordo/12 bg-brand-marfim px-3 py-1 font-serif text-[0.72rem] uppercase tracking-[0.24em] text-brand-tinta">
-          <PenLine className="size-3.5 text-brand-bordo" />
+        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-border-default bg-surface-2 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-text-secondary">
+          <Icon
+            name="edit_note"
+            opticalSize={20}
+            className="text-[16px] text-brand-primary"
+          />
           Biblioteca pessoal
         </div>
-        <h2 className="font-serif text-[2.25rem] leading-[1.05] text-brand-carvao sm:text-[3rem] lg:text-[3.35rem]">
+        <h2 className="text-[1.75rem] font-bold leading-[1.15] tracking-tight text-text-primary sm:text-[2.1rem] lg:text-[2.4rem]">
           Bem-vindo de volta,{" "}
-          <em className="italic text-brand-bordo">{firstName || "autor"}</em>.
+          <span className="text-brand-primary">{firstName || "autor"}</span>.
         </h2>
-        <p className="mt-5 max-w-2xl font-serif text-[1.02rem] leading-[1.75] text-brand-grafite sm:text-[1.12rem]">
+        <p className="mt-4 max-w-2xl text-[1rem] leading-[1.6] text-text-secondary">
           Suas histórias estão reunidas em um espaço pensado para escrever com
           foco, organizar ideias e acompanhar sua evolução.
         </p>
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <NewProjectDialog triggerClassName="h-11 px-5" />
           <Link
             href="#materiais"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-brand-bordo/15 bg-brand-marfim px-5 font-serif text-[0.95rem] text-brand-bordo transition-colors hover:bg-brand-pergaminho focus-visible:ring-2 focus-visible:ring-brand-bordo/35 focus-visible:outline-none"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-border-default bg-surface-2 px-5 text-[0.92rem] font-bold text-brand-primary transition-colors hover:bg-surface-3 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             Ver meus textos
-            <ArrowRight className="size-4" />
+            <Icon
+              name="arrow_forward"
+              opticalSize={20}
+              className="text-[18px]"
+            />
           </Link>
         </div>
       </div>

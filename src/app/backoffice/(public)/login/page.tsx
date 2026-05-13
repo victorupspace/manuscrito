@@ -25,27 +25,26 @@ export default async function BackofficeLoginPage() {
       />
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:radial-gradient(rgba(245,241,232,0.7)_1px,transparent_1px)] [background-size:18px_18px]"
+        className="pointer-events-none absolute inset-0 opacity-[0.04] bg-[radial-gradient(rgba(245,241,232,0.7)_1px,transparent_1px)] bg-size-[18px_18px]"
       />
 
-      <div className="brand-glass relative w-full max-w-md rounded-md px-7 py-9 sm:px-9 sm:py-10">
-        {/* Ornamento de página de rosto */}
+      <div className="brand-glass relative w-full max-w-md rounded-lg px-7 py-9 sm:px-9 sm:py-10">
         <div
           aria-hidden
           className="mb-6 flex items-center justify-center gap-3 text-brand-marfim/55"
         >
           <span className="h-px w-8 bg-current opacity-60" />
-          <span className="text-[0.6rem] uppercase tracking-[0.4em]">
+          <span className="text-[0.62rem] font-bold uppercase tracking-[0.24em]">
             Backoffice
           </span>
           <span className="h-px w-8 bg-current opacity-60" />
         </div>
 
         <header className="text-center">
-          <h1 className="font-serif text-[1.75rem] italic leading-tight text-brand-marfim sm:text-[2rem]">
+          <h1 className="text-[1.6rem] font-bold leading-tight tracking-tight text-brand-marfim sm:text-[1.85rem]">
             Acesso administrativo
           </h1>
-          <p className="mt-2 font-serif text-[0.92rem] leading-relaxed text-brand-marfim/75">
+          <p className="mt-2 text-[0.92rem] leading-relaxed text-brand-marfim/75">
             Área restrita ao curador do projeto.
           </p>
         </header>
@@ -54,8 +53,8 @@ export default async function BackofficeLoginPage() {
           <BackofficeLoginForm />
         </div>
 
-        <p className="mt-6 text-center font-serif text-[0.7rem] uppercase tracking-[0.28em] text-brand-marfim/45">
-          — Anno mmxxvi —
+        <p className="mt-6 text-center text-[0.7rem] font-bold uppercase tracking-[0.18em] text-brand-marfim/45">
+          Anno mmxxvi
         </p>
       </div>
     </main>

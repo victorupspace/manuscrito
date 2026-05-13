@@ -18,7 +18,7 @@ export async function getDocumentNode({
   const { data, error } = await supabase
     .from("document_nodes")
     .select(
-      "id, project_id, user_id, parent_id, type, title, content_json, content_html, plain_text, summary, order_index, status, word_count, character_count, reading_time, target_words, notes, created_at, updated_at, last_saved_at, last_synced_at",
+      "id, project_id, user_id, parent_id, type, title, content_json, content_html, plain_text, synopsis, summary, order_index, status, word_count, character_count, reading_time, target_words, notes, pov, location, tags, metadata, archived_at, created_at, updated_at, last_saved_at, last_synced_at",
     )
     .eq("id", documentNodeId)
     .eq("user_id", userId)

@@ -1,8 +1,8 @@
 "use client";
 
 import { useActionState, useId, useState } from "react";
-import { Eye, EyeOff, Lock } from "lucide-react";
 
+import { Icon } from "@/components/ui/icon";
 import {
   loginBackofficeAction,
   type LoginBackofficeState,
@@ -11,6 +11,16 @@ import { cn } from "@/lib/utils";
 
 const INITIAL_STATE: LoginBackofficeState = {};
 
+/**
+ * Formulário de login do backoffice.
+ *
+ * Estilo
+ * ──────
+ * O card vive sobre fundo vinho (ver `app/backoffice/(public)/login/page.tsx`),
+ * portanto todo o conteúdo usa `text-on-brand` / `brand-marfim` para preservar
+ * contraste. A migração para os tokens v2 manteve esse padrão — só removeu
+ * `font-serif` / `italic` para alinhar com o restante do sistema.
+ */
 export function BackofficeLoginForm() {
   const baseId = useId();
   const [state, action, pending] = useActionState(
@@ -37,7 +47,7 @@ export function BackofficeLoginForm() {
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor={`${baseId}-password`}
-          className="font-serif text-[0.68rem] uppercase tracking-[0.28em] text-brand-marfim/70"
+          className="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-brand-marfim/75"
         >
           Senha
         </label>
@@ -49,7 +59,7 @@ export function BackofficeLoginForm() {
           )}
         >
           <span className="flex shrink-0 items-center text-brand-marfim/55 transition-colors group-focus-within/field:text-brand-marfim">
-            <Lock aria-hidden className="h-4 w-4" />
+            <Icon name="lock" opticalSize={20} className="text-[18px]" />
           </span>
           <input
             id={`${baseId}-password`}
@@ -59,7 +69,7 @@ export function BackofficeLoginForm() {
             required
             aria-invalid={state?.error ? true : undefined}
             aria-describedby={errorId}
-            className="min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-2.5 font-serif text-[1rem] text-brand-marfim placeholder:text-brand-marfim/35 outline-none focus:ring-0"
+            className="min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-2.5 text-[1rem] text-brand-marfim placeholder:text-brand-marfim/40 outline-none focus:ring-0"
           />
           <button
             type="button"
@@ -72,11 +82,11 @@ export function BackofficeLoginForm() {
               "hover:text-brand-marfim focus-visible:text-brand-marfim focus-visible:ring-2 focus-visible:ring-brand-marfim/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo",
             )}
           >
-            {showPassword ? (
-              <EyeOff aria-hidden className="pointer-events-none h-4 w-4" />
-            ) : (
-              <Eye aria-hidden className="pointer-events-none h-4 w-4" />
-            )}
+            <Icon
+              name={showPassword ? "visibility_off" : "visibility"}
+              opticalSize={20}
+              className="pointer-events-none text-[18px]"
+            />
           </button>
         </div>
       </div>
@@ -85,7 +95,7 @@ export function BackofficeLoginForm() {
         <p
           id={errorId}
           role="alert"
-          className="font-serif text-[0.85rem] text-brand-marfim"
+          className="text-[0.88rem] leading-relaxed text-brand-marfim"
         >
           <span
             aria-hidden
@@ -101,7 +111,7 @@ export function BackofficeLoginForm() {
         aria-disabled={pending || undefined}
         aria-busy={pending || undefined}
         className={cn(
-          "group relative mt-1 inline-flex items-center justify-center gap-3 rounded-sm border border-brand-marfim bg-brand-marfim px-6 py-3.5 font-serif text-[0.98rem] text-brand-bordo transition-all duration-200 outline-none",
+          "group relative mt-1 inline-flex items-center justify-center gap-3 rounded-md bg-brand-marfim px-6 py-3.5 text-[0.95rem] font-bold text-brand-bordo transition-all duration-200 outline-none",
           "hover:bg-brand-marfim/90 focus-visible:ring-2 focus-visible:ring-brand-marfim/70 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo",
           "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-brand-marfim",
           "active:translate-y-px",
@@ -115,12 +125,11 @@ export function BackofficeLoginForm() {
         ) : (
           <>
             <span>Entrar</span>
-            <span
-              aria-hidden
-              className="inline-block translate-x-0 transition-transform duration-200 group-hover:translate-x-0.5"
-            >
-              →
-            </span>
+            <Icon
+              name="arrow_forward"
+              opticalSize={20}
+              className="text-[18px] transition-transform duration-200 group-hover:translate-x-0.5"
+            />
           </>
         )}
       </button>
@@ -139,7 +148,7 @@ function Field({ id, label, invalid, className, ...inputProps }: FieldProps) {
     <div className="flex flex-col gap-1.5">
       <label
         htmlFor={id}
-        className="font-serif text-[0.68rem] uppercase tracking-[0.28em] text-brand-marfim/70"
+        className="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-brand-marfim/75"
       >
         {label}
       </label>
@@ -154,7 +163,7 @@ function Field({ id, label, invalid, className, ...inputProps }: FieldProps) {
           id={id}
           aria-invalid={invalid ? true : undefined}
           className={cn(
-            "min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-2.5 font-serif text-[1rem] text-brand-marfim placeholder:text-brand-marfim/35 outline-none focus:ring-0",
+            "min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-2.5 text-[1rem] text-brand-marfim placeholder:text-brand-marfim/40 outline-none focus:ring-0",
             className,
           )}
           {...inputProps}

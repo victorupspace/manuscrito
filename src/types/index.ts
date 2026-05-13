@@ -34,7 +34,14 @@ export type Project = {
   updatedAt: ISODateString;
 };
 
-export type DocumentStatus = "draft" | "in_review" | "completed" | "archived";
+export type DocumentStatus =
+  | "idea"
+  | "draft"
+  | "in_progress"
+  | "in_review"
+  | "review"
+  | "completed"
+  | "archived";
 
 export type DocumentNode = {
   id: string;
@@ -46,6 +53,7 @@ export type DocumentNode = {
   contentJson: unknown | null;
   contentHtml: string | null;
   plainText: string | null;
+  synopsis?: string | null;
   summary: string | null;
   orderIndex: number;
   status: DocumentStatus;
@@ -54,6 +62,11 @@ export type DocumentNode = {
   readingTime?: number;
   targetWords?: number | null;
   notes?: string | null;
+  pov?: string | null;
+  location?: string | null;
+  tags?: string[];
+  metadata?: Record<string, unknown>;
+  archivedAt?: ISODateString | null;
   lastSavedAt?: ISODateString | null;
   lastSyncedAt?: ISODateString | null;
   createdAt: ISODateString;

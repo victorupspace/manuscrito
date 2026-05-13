@@ -16,6 +16,9 @@ Defina em `.env.local` (nunca em código, nunca no client):
 | `BACKOFFICE_ADMIN_EMAIL`        | servidor     | E-mail aceito pelo login local do backoffice.                                     |
 | `BACKOFFICE_ADMIN_PASSWORD`     | servidor     | Senha aceita pelo login local do backoffice.                                      |
 | `BACKOFFICE_SESSION_SECRET`     | servidor     | Segredo HMAC para assinar o cookie de sessão. Gere com `openssl rand -base64 32`. |
+| `RESEND_API_KEY`                | servidor     | API key do Resend para emails transacionais administrativos.                      |
+| `TRANSACTIONAL_EMAIL_FROM`      | servidor     | Remetente verificado. Ex.: `Manuscrito <noreply@seudominio.com>`.                 |
+| `NEXT_PUBLIC_APP_URL`           | público      | URL pública do app usada nos links de email. Ex.: `https://manuscrito.app`.       |
 
 > ⚠️ `SUPABASE_SERVICE_ROLE_KEY` **nunca** deve ser exposta ao cliente. O
 > módulo `src/lib/supabase/admin.ts` declara `import "server-only"`; qualquer
@@ -82,7 +85,11 @@ A proteção é feita em duas camadas (defense-in-depth):
    como aprovado, cria/ativa o registro em `customers`, cria a assinatura
    inicial em `subscriptions`, atualiza a solicitação para `approved` e
    registra `waitlist.approve` em `admin_audit_logs`.
-5. Ao clicar **Reprovar**, idem com status `rejected` e ação
+5. Se `RESEND_API_KEY` e `TRANSACTIONAL_EMAIL_FROM` estiverem configurados,
+   o sistema envia automaticamente um email “Sua conta foi aprovada” com link
+   para `/login`. Caso essas variáveis não existam, a aprovação continua
+   funcionando e o evento fica registrado na auditoria como email não enviado.
+6. Ao clicar **Reprovar**, idem com status `rejected` e ação
    `waitlist.reject`.
 
 Também é possível cadastrar um cliente direto em `/backoffice/customers`. Esse

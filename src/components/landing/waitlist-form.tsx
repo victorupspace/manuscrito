@@ -57,14 +57,14 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="flex flex-col gap-5"
+      className="flex flex-col gap-4"
       aria-describedby={serverError ? `${baseId}-server-error` : undefined}
     >
       <header className="text-center">
-        <h2 className="font-serif text-[1.75rem] italic leading-tight text-brand-marfim sm:text-[2rem]">
+        <h2 className="font-serif text-[1.8rem] italic leading-tight text-brand-bordo sm:text-[2.15rem]">
           Solicite seu acesso
         </h2>
-        <p className="mt-2 font-serif text-[0.92rem] leading-relaxed text-brand-marfim/75">
+        <p className="mx-auto mt-2 max-w-sm font-serif text-[0.95rem] leading-relaxed text-brand-tinta">
           Entre na lista beta e seja avisado quando sua conta for aprovada.
         </p>
       </header>
@@ -130,11 +130,11 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
         <p
           id={`${baseId}-server-error`}
           role="alert"
-          className="font-serif text-[0.85rem] text-brand-marfim"
+          className="rounded-md border border-brand-bordo/15 bg-brand-bordo/8 px-3 py-2 font-serif text-[0.85rem] text-brand-bordo"
         >
           <span
             aria-hidden
-            className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-brand-marfim align-middle"
+            className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-brand-bordo align-middle"
           />
           {serverError}
         </p>
@@ -146,9 +146,9 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
         aria-disabled={isDisabled || undefined}
         aria-busy={isSubmitting || undefined}
         className={cn(
-          "group relative mt-1 inline-flex items-center justify-center gap-3 rounded-sm border border-brand-marfim bg-brand-marfim px-6 py-3.5 font-serif text-[0.98rem] text-brand-bordo transition-all duration-200 outline-none",
-          "hover:bg-brand-marfim/90 focus-visible:ring-2 focus-visible:ring-brand-marfim/70 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo",
-          "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-brand-marfim",
+          "group relative mt-1 inline-flex items-center justify-center gap-3 rounded-md border border-brand-bordo bg-brand-bordo px-6 py-3.5 font-serif text-[0.98rem] text-brand-marfim shadow-sm transition-all duration-200 outline-none",
+          "hover:bg-brand-bordo-profundo focus-visible:ring-2 focus-visible:ring-brand-bordo/45 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-marfim",
+          "disabled:cursor-not-allowed disabled:border-brand-bordo/20 disabled:bg-brand-bordo/15 disabled:text-brand-bordo/45 disabled:hover:bg-brand-bordo/15",
           "active:translate-y-px",
         )}
       >
@@ -171,10 +171,10 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
       </button>
 
       <div className="flex flex-col items-center gap-1.5 text-center">
-        <p className="font-serif text-[0.72rem] uppercase tracking-[0.28em] text-brand-marfim/55">
+        <p className="font-serif text-[0.72rem] uppercase tracking-[0.28em] text-brand-bordo/55">
           — Vagas limitadas · Volume I —
         </p>
-        <p className="font-serif text-[0.68rem] leading-snug text-brand-marfim/45">
+        <p className="font-serif text-[0.68rem] leading-snug text-brand-tinta/70">
           Seus dados são tratados com sigilo e criptografia, conforme a LGPD.
         </p>
       </div>
@@ -217,19 +217,19 @@ const Field = forwardRef<HTMLInputElement, FieldProps>(function Field(
     <div className="flex flex-col gap-1.5">
       <label
         htmlFor={id}
-        className="font-serif text-[0.68rem] uppercase tracking-[0.28em] text-brand-marfim/70"
+        className="font-serif text-[0.68rem] uppercase tracking-[0.24em] text-brand-tinta"
       >
         {label}
       </label>
       <div
         className={cn(
-          "group/field flex items-center gap-2 border-b border-brand-marfim/30 transition-colors",
-          "focus-within:border-brand-marfim",
-          error ? "border-brand-marfim" : "",
+          "group/field flex min-h-11 items-center gap-2 rounded-md border border-brand-bordo/14 bg-brand-marfim/55 px-3 transition-colors",
+          "focus-within:border-brand-bordo/45 focus-within:bg-brand-marfim focus-within:ring-2 focus-within:ring-brand-bordo/12",
+          error ? "border-brand-bordo/55 bg-brand-bordo/5" : "",
         )}
       >
         {leadingIcon ? (
-          <span className="flex shrink-0 items-center text-brand-marfim/55 transition-colors group-focus-within/field:text-brand-marfim">
+          <span className="flex shrink-0 items-center text-brand-tinta/60 transition-colors group-focus-within/field:text-brand-bordo">
             {leadingIcon}
           </span>
         ) : null}
@@ -239,7 +239,7 @@ const Field = forwardRef<HTMLInputElement, FieldProps>(function Field(
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
           className={cn(
-            "min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-2.5 font-serif text-[1rem] text-brand-marfim placeholder:text-brand-marfim/35 outline-none",
+            "min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-2.5 font-serif text-[1rem] text-brand-carvao placeholder:text-brand-cinza/70 outline-none",
             "focus:ring-0",
             className,
           )}
@@ -255,18 +255,18 @@ const Field = forwardRef<HTMLInputElement, FieldProps>(function Field(
         <p
           id={errorId}
           role="alert"
-          className="mt-0.5 flex items-center gap-2 font-serif text-[0.78rem] italic text-brand-marfim"
+          className="mt-0.5 flex items-center gap-2 font-serif text-[0.78rem] italic text-brand-bordo"
         >
           <span
             aria-hidden
-            className="inline-block h-1 w-1 rounded-full bg-brand-marfim"
+            className="inline-block h-1 w-1 rounded-full bg-brand-bordo"
           />
           {error}
         </p>
       ) : hint ? (
         <p
           id={hintId}
-          className="mt-0.5 font-serif text-[0.75rem] text-brand-marfim/55"
+          className="mt-0.5 font-serif text-[0.75rem] text-brand-tinta/75"
         >
           {hint}
         </p>
@@ -303,18 +303,18 @@ function PasswordField({
     <div className="flex flex-col gap-1.5">
       <label
         htmlFor={id}
-        className="font-serif text-[0.68rem] uppercase tracking-[0.28em] text-brand-marfim/70"
+        className="font-serif text-[0.68rem] uppercase tracking-[0.24em] text-brand-tinta"
       >
         {label}
       </label>
       <div
         className={cn(
-          "group/field flex items-center gap-2 border-b border-brand-marfim/30 transition-colors",
-          "focus-within:border-brand-marfim",
-          error ? "border-brand-marfim" : "",
+          "group/field flex min-h-11 items-center gap-2 rounded-md border border-brand-bordo/14 bg-brand-marfim/55 px-3 transition-colors",
+          "focus-within:border-brand-bordo/45 focus-within:bg-brand-marfim focus-within:ring-2 focus-within:ring-brand-bordo/12",
+          error ? "border-brand-bordo/55 bg-brand-bordo/5" : "",
         )}
       >
-        <span className="flex shrink-0 items-center text-brand-marfim/55 transition-colors group-focus-within/field:text-brand-marfim">
+        <span className="flex shrink-0 items-center text-brand-tinta/60 transition-colors group-focus-within/field:text-brand-bordo">
           <Lock aria-hidden className="h-4 w-4" />
         </span>
         <input
@@ -323,7 +323,7 @@ function PasswordField({
           autoComplete="new-password"
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
-          className="min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-2.5 font-serif text-[1rem] text-brand-marfim placeholder:text-brand-marfim/35 outline-none focus:ring-0"
+          className="min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-2.5 font-serif text-[1rem] text-brand-carvao placeholder:text-brand-cinza/70 outline-none focus:ring-0"
           {...registration}
         />
         <button
@@ -339,8 +339,8 @@ function PasswordField({
           aria-pressed={visible}
           aria-label={visible ? "Ocultar senha" : "Mostrar senha"}
           className={cn(
-            "flex h-7 w-7 shrink-0 items-center justify-center rounded-sm text-brand-marfim/55 transition-colors outline-none",
-            "hover:text-brand-marfim focus-visible:text-brand-marfim focus-visible:ring-2 focus-visible:ring-brand-marfim/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo",
+            "flex h-7 w-7 shrink-0 items-center justify-center rounded-sm text-brand-tinta/60 transition-colors outline-none",
+            "hover:text-brand-bordo focus-visible:text-brand-bordo focus-visible:ring-2 focus-visible:ring-brand-bordo/35 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-marfim",
           )}
         >
           {visible ? (
@@ -354,18 +354,18 @@ function PasswordField({
         <p
           id={errorId}
           role="alert"
-          className="mt-0.5 flex items-center gap-2 font-serif text-[0.78rem] italic text-brand-marfim"
+          className="mt-0.5 flex items-center gap-2 font-serif text-[0.78rem] italic text-brand-bordo"
         >
           <span
             aria-hidden
-            className="inline-block h-1 w-1 rounded-full bg-brand-marfim"
+            className="inline-block h-1 w-1 rounded-full bg-brand-bordo"
           />
           {error}
         </p>
       ) : hint ? (
         <p
           id={hintId}
-          className="mt-0.5 font-serif text-[0.75rem] text-brand-marfim/55"
+          className="mt-0.5 font-serif text-[0.75rem] text-brand-tinta/75"
         >
           {hint}
         </p>

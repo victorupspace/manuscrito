@@ -35,14 +35,23 @@ export async function deleteProjectAction(
 
   try {
     const supabase = await createSupabaseServerClient();
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("projects")
       .delete()
       .eq("id", projectId)
-      .eq("user_id", profile.authUserId);
+      .eq("user_id", profile.authUserId)
+      .select("id");
 
     if (error) {
       return { status: "error", message: error.message };
+    }
+
+    if (!data?.length) {
+      return {
+        status: "error",
+        message:
+          "Não foi possível excluir este material. Ele pode não existir mais ou você não tem permissão.",
+      };
     }
 
     revalidatePath("/plataforma");

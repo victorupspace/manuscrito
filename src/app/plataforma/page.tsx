@@ -1,9 +1,9 @@
 import { MaterialsSection } from "@/components/platform/materials-section";
 import { OverviewMetrics } from "@/components/platform/overview-metrics";
 import { PlatformShell } from "@/components/platform/platform-shell";
+import { TasksMetricCard } from "@/components/platform/tasks-metric-card";
 import { WelcomePanel } from "@/components/platform/welcome-panel";
 import { WritingInsights } from "@/components/platform/writing-insights";
-import { WritingTasksCard } from "@/components/platform/writing-tasks-card";
 import { PROJECT_TYPES } from "@/constants/project-types";
 import { getPlatformOverview } from "@/features/platform/services/get-platform-overview";
 import { getUserProjects } from "@/features/projects/services/get-user-projects";
@@ -54,30 +54,25 @@ export default async function PlataformaPage() {
               ? overviewResult.message
               : undefined
           }
+        >
+          <TasksMetricCard
+            initialTasks={tasks}
+            error={
+              tasksResult.status === "error" ? tasksResult.message : undefined
+            }
+          />
+        </OverviewMetrics>
+
+        <MaterialsSection
+          projects={projects}
+          error={
+            projectsResult.status === "error"
+              ? projectsResult.message
+              : undefined
+          }
         />
 
-        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_26rem]">
-          <div className="space-y-8">
-            <MaterialsSection
-              projects={projects}
-              error={
-                projectsResult.status === "error"
-                  ? projectsResult.message
-                  : undefined
-              }
-            />
-            <WritingInsights />
-          </div>
-
-          <aside className="space-y-5">
-            <WritingTasksCard
-              initialTasks={tasks}
-              error={
-                tasksResult.status === "error" ? tasksResult.message : undefined
-              }
-            />
-          </aside>
-        </div>
+        <WritingInsights />
       </div>
     </PlatformShell>
   );

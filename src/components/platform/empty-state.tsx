@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { PenLine } from "lucide-react";
 
+import { Icon } from "@/components/ui/icon";
 import { NewProjectDialog } from "@/components/platform/new-project-dialog";
 
 export function EmptyState({
@@ -16,15 +16,15 @@ export function EmptyState({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-md border border-dashed border-brand-bordo/25 bg-brand-creme/45 p-8 text-center"
+      className="rounded-md border border-dashed border-border-strong bg-surface-muted p-8 text-center"
     >
-      <span className="mx-auto flex size-12 items-center justify-center rounded-md bg-brand-marfim text-brand-bordo">
-        <PenLine className="size-5" />
+      <span className="mx-auto flex size-12 items-center justify-center rounded-md bg-brand-primary-soft text-brand-primary">
+        <Icon name="edit_note" opticalSize={24} className="text-[24px]" />
       </span>
-      <h3 className="mt-4 font-serif text-[1.35rem] italic text-brand-bordo">
+      <h3 className="mt-4 text-[1.2rem] font-bold tracking-tight text-text-primary">
         {title}
       </h3>
-      <p className="mx-auto mt-2 max-w-md font-serif text-[0.95rem] leading-relaxed text-brand-tinta">
+      <p className="mx-auto mt-2 max-w-md text-[0.94rem] leading-relaxed text-text-secondary">
         {text}
       </p>
       <div className="mt-5">

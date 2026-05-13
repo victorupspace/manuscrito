@@ -2,19 +2,28 @@
 
 import { useState, useTransition } from "react";
 
+import { DOCUMENT_STATUS_OPTIONS } from "@/constants/document-statuses";
 import { updateDocumentMetadataAction } from "@/features/writing/actions/update-document-metadata";
 import { WritingStats } from "@/components/writing/writing-stats";
 import type { WritingDocumentNode } from "@/types/writing";
 
-const statusOptions: Array<{
-  value: WritingDocumentNode["status"];
-  label: string;
-}> = [
-  { value: "draft", label: "Rascunho" },
-  { value: "in_review", label: "Em revisão" },
-  { value: "completed", label: "Concluído" },
-  { value: "archived", label: "Arquivado" },
-];
+type ContextDraft = {
+  documentId: string;
+  synopsis: string;
+  pov: string;
+  location: string;
+  tags: string;
+};
+
+function getContextDraft(document: WritingDocumentNode): ContextDraft {
+  return {
+    documentId: document.id,
+    synopsis: document.synopsis ?? "",
+    pov: document.pov ?? "",
+    location: document.location ?? "",
+    tags: document.tags.join(", "),
+  };
+}
 
 export function WritingContextPanel({
   document,
@@ -36,7 +45,27 @@ export function WritingContextPanel({
   readOnly?: boolean;
 }) {
   const [message, setMessage] = useState<string | null>(null);
+  const [contextDraft, setContextDraft] = useState(() =>
+    getContextDraft(document),
+  );
   const [pending, startTransition] = useTransition();
+
+  if (contextDraft.documentId !== document.id) {
+    setContextDraft(getContextDraft(document));
+  }
+
+  const synopsis = contextDraft.synopsis;
+  const pov = contextDraft.pov;
+  const location = contextDraft.location;
+  const tags = contextDraft.tags;
+  const setSynopsis = (nextSynopsis: string) =>
+    setContextDraft((current) => ({ ...current, synopsis: nextSynopsis }));
+  const setPov = (nextPov: string) =>
+    setContextDraft((current) => ({ ...current, pov: nextPov }));
+  const setLocation = (nextLocation: string) =>
+    setContextDraft((current) => ({ ...current, location: nextLocation }));
+  const setTags = (nextTags: string) =>
+    setContextDraft((current) => ({ ...current, tags: nextTags }));
 
   function saveMetadata() {
     setMessage(null);
@@ -46,6 +75,13 @@ export function WritingContextPanel({
         status,
         targetWords,
         notes,
+        synopsis,
+        pov,
+        location,
+        tags: tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean),
       });
       setMessage(result.status === "ok" ? "Contexto salvo." : result.message);
     });
@@ -94,12 +130,60 @@ export function WritingContextPanel({
               }
               className="mt-1 h-10 w-full rounded-md border border-brand-bordo/12 bg-brand-marfim px-3 font-serif text-[0.9rem] outline-none focus-visible:ring-2 focus-visible:ring-brand-bordo/25"
             >
-              {statusOptions.map((option) => (
+              {DOCUMENT_STATUS_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
               ))}
             </select>
+          </label>
+          <label className="block">
+            <span className="font-serif text-[0.76rem] text-brand-tinta">
+              Sinopse do trecho
+            </span>
+            <textarea
+              value={synopsis}
+              readOnly={readOnly}
+              onChange={(event) => setSynopsis(event.target.value)}
+              className="mt-1 min-h-24 w-full resize-none rounded-md border border-brand-bordo/12 bg-brand-marfim p-3 font-serif text-[0.88rem] leading-relaxed outline-none focus-visible:ring-2 focus-visible:ring-brand-bordo/25"
+              placeholder="O que esta parte precisa cumprir na narrativa?"
+            />
+          </label>
+          <label className="block">
+            <span className="font-serif text-[0.76rem] text-brand-tinta">
+              Ponto de vista
+            </span>
+            <input
+              value={pov}
+              readOnly={readOnly}
+              onChange={(event) => setPov(event.target.value)}
+              className="mt-1 h-10 w-full rounded-md border border-brand-bordo/12 bg-brand-marfim px-3 font-serif text-[0.9rem] outline-none focus-visible:ring-2 focus-visible:ring-brand-bordo/25"
+              placeholder="Ex.: narrador, personagem"
+            />
+          </label>
+          <label className="block">
+            <span className="font-serif text-[0.76rem] text-brand-tinta">
+              Local
+            </span>
+            <input
+              value={location}
+              readOnly={readOnly}
+              onChange={(event) => setLocation(event.target.value)}
+              className="mt-1 h-10 w-full rounded-md border border-brand-bordo/12 bg-brand-marfim px-3 font-serif text-[0.9rem] outline-none focus-visible:ring-2 focus-visible:ring-brand-bordo/25"
+              placeholder="Ex.: casa, estrada, cidade"
+            />
+          </label>
+          <label className="block">
+            <span className="font-serif text-[0.76rem] text-brand-tinta">
+              Tags
+            </span>
+            <input
+              value={tags}
+              readOnly={readOnly}
+              onChange={(event) => setTags(event.target.value)}
+              className="mt-1 h-10 w-full rounded-md border border-brand-bordo/12 bg-brand-marfim px-3 font-serif text-[0.9rem] outline-none focus-visible:ring-2 focus-visible:ring-brand-bordo/25"
+              placeholder="separe por vírgula"
+            />
           </label>
           <label className="block">
             <span className="font-serif text-[0.76rem] text-brand-tinta">

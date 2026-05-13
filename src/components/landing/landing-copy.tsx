@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-
+import { BrandWordmark } from "@/components/brand/brand-wordmark";
 import { BetaBadge } from "@/components/landing/beta-badge";
 import { LoginEntry } from "@/components/landing/login-entry";
 
@@ -10,18 +9,7 @@ export function LandingCopy() {
     <div className="flex h-full w-full flex-col justify-between gap-8 px-6 py-10 sm:px-10 md:px-12 lg:px-16 xl:px-20 lg:py-14">
       {/* Cabeçalho institucional (wordmark + acesso refinado para login) */}
       <header className="flex items-start justify-between gap-4">
-        <Link
-          href="/"
-          className="group inline-flex flex-col leading-none text-brand-carvao outline-none focus-visible:ring-2 focus-visible:ring-brand-bordo/40 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-marfim rounded-sm"
-          aria-label="Manuscrito — voltar à página inicial"
-        >
-          <span className="font-serif italic text-2xl tracking-tight md:text-[1.75rem]">
-            Manuscrito
-          </span>
-          <span className="mt-1 font-serif text-[0.6rem] uppercase tracking-[0.32em] text-brand-tinta">
-            Editorial · Anno mmxxvi
-          </span>
-        </Link>
+        <BrandWordmark href="/" tone="dark" size="md" />
 
         <div className="flex flex-col items-end gap-2 sm:gap-3">
           <BetaBadge tone="light" className="hidden sm:inline-flex">

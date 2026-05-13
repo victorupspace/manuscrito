@@ -29,6 +29,10 @@ export async function updateDocumentMetadataAction(
       status: parsed.data.status,
       target_words: parsed.data.targetWords ?? null,
       notes: parsed.data.notes ?? null,
+      synopsis: parsed.data.synopsis ?? null,
+      pov: parsed.data.pov ?? null,
+      location: parsed.data.location ?? null,
+      tags: parsed.data.tags ?? [],
     })
     .eq("id", parsed.data.documentNodeId)
     .eq("user_id", profile.authUserId)

@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 
 import { getBackofficeSession } from "@/lib/backoffice/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { sendTransactionalEmail } from "@/lib/email/send-transactional-email";
+import { buildAccountApprovedEmail } from "@/features/backoffice/emails/account-approved-email";
 import { recordAudit } from "@/features/backoffice/services/record-audit";
 
 export type AdminActionResult =
@@ -138,6 +140,25 @@ export async function approveSignupRequestAction(
       action: "waitlist.approve",
       targetType: "waitlist_request",
       targetId: requestId,
+    });
+
+    const approvalEmail = buildAccountApprovedEmail({
+      fullName: row.full_name,
+    });
+    const emailResult = await sendTransactionalEmail({
+      to: row.email,
+      ...approvalEmail,
+    });
+
+    await recordAudit({
+      actorEmail: session.email,
+      action:
+        emailResult.status === "sent"
+          ? "waitlist.approval_email_sent"
+          : "waitlist.approval_email_not_sent",
+      targetType: "waitlist_request",
+      targetId: requestId,
+      payload: { email: row.email, emailResult },
     });
 
     revalidatePath("/backoffice/requests");

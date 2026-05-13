@@ -2,23 +2,26 @@
 
 import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ListChecks, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 
+import { Icon } from "@/components/ui/icon";
 import { TaskItem } from "@/components/platform/task-item";
 import { createTaskAction } from "@/features/tasks/actions/create-task";
 import {
   writingTaskCreateSchema,
   type WritingTaskCreateInput,
 } from "@/lib/validations/writing-task";
+import { cn } from "@/lib/utils";
 import type { WritingTask } from "@/types/writing-task";
 
 export function WritingTasksCard({
   initialTasks,
   error,
+  className,
 }: {
   initialTasks: WritingTask[];
   error?: string;
+  className?: string;
 }) {
   const [tasks, setTasks] = useState(initialTasks);
   const [message, setMessage] = useState<string | null>(null);
@@ -53,16 +56,21 @@ export function WritingTasksCard({
   const completedTasks = tasks.filter((task) => task.completed);
 
   return (
-    <section className="rounded-lg border border-brand-bordo/10 bg-brand-creme/55 p-5 shadow-[0_24px_70px_-56px_rgba(31,27,22,0.55)]">
+    <section
+      className={cn(
+        "rounded-lg border border-border-subtle bg-surface-1 p-5 shadow-sm",
+        className,
+      )}
+    >
       <div className="flex items-start gap-3">
-        <span className="flex size-10 items-center justify-center rounded-md bg-brand-marfim text-brand-bordo">
-          <ListChecks className="size-5" />
+        <span className="flex size-10 items-center justify-center rounded-md bg-brand-primary-soft text-brand-primary">
+          <Icon name="checklist" opticalSize={24} className="text-[22px]" />
         </span>
         <div>
-          <h2 className="font-serif text-[1.35rem] italic text-brand-bordo">
+          <h2 className="text-[1.15rem] font-bold tracking-tight text-text-primary">
             Tarefas de escrita
           </h2>
-          <p className="mt-1 font-serif text-[0.92rem] leading-relaxed text-brand-tinta">
+          <p className="mt-1 text-[0.9rem] leading-relaxed text-text-secondary">
             Organize pequenos passos para manter seu projeto em movimento.
           </p>
         </div>
@@ -79,16 +87,16 @@ export function WritingTasksCard({
               {...register("title")}
               aria-invalid={errors.title ? true : undefined}
               aria-describedby={errors.title ? "task-title-error" : undefined}
-              className="h-10 w-full rounded-md border border-brand-bordo/15 bg-brand-marfim px-3 font-serif text-[0.92rem] text-brand-carvao outline-none placeholder:text-brand-tinta/40 focus-visible:border-brand-bordo focus-visible:ring-2 focus-visible:ring-brand-bordo/25"
+              className="h-10 w-full rounded-md border border-border-default bg-surface-2 px-3 text-[0.92rem] text-text-primary outline-none placeholder:text-text-muted focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-ring"
               placeholder="Ex.: Revisar o primeiro capítulo"
             />
           </div>
           <button
             type="submit"
             disabled={pending}
-            className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-md border border-brand-bordo bg-brand-bordo px-3 font-serif text-[0.88rem] text-brand-marfim transition-colors hover:bg-brand-bordo-profundo disabled:opacity-55"
+            className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-md bg-brand-primary px-3 text-[0.88rem] font-bold text-text-on-brand transition-colors hover:bg-brand-primary-hover disabled:opacity-55"
           >
-            <Plus className="size-4" />
+            <Icon name="add" opticalSize={20} className="text-[18px]" />
             Adicionar
           </button>
         </div>
@@ -96,31 +104,28 @@ export function WritingTasksCard({
           <p
             id="task-title-error"
             role="alert"
-            className="font-serif text-[0.8rem] italic text-brand-bordo"
+            className="text-[0.8rem] text-destructive"
           >
             {errors.title.message}
           </p>
         ) : null}
         {message ? (
-          <p
-            role="alert"
-            className="font-serif text-[0.8rem] italic text-brand-bordo"
-          >
+          <p role="alert" className="text-[0.8rem] text-destructive">
             {message}
           </p>
         ) : null}
       </form>
 
       {error ? (
-        <div className="mt-5 rounded-md border border-brand-bordo/20 bg-brand-marfim p-4">
-          <p className="font-serif text-[0.9rem] text-brand-bordo">{error}</p>
+        <div className="mt-5 rounded-md border border-destructive/30 bg-surface-2 p-4">
+          <p className="text-[0.9rem] text-destructive">{error}</p>
         </div>
       ) : tasks.length === 0 ? (
-        <div className="mt-5 rounded-md border border-dashed border-brand-bordo/25 bg-brand-marfim/65 p-5">
-          <h3 className="font-serif text-[1.1rem] italic text-brand-bordo">
+        <div className="mt-5 rounded-md border border-dashed border-border-default bg-surface-2 p-5">
+          <h3 className="text-[1rem] font-bold tracking-tight text-text-primary">
             Crie uma próxima ação.
           </h3>
-          <p className="mt-1 font-serif text-[0.9rem] leading-relaxed text-brand-tinta">
+          <p className="mt-1 text-[0.88rem] leading-relaxed text-text-secondary">
             Uma boa história avança melhor quando o próximo passo está claro.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
@@ -131,7 +136,7 @@ export function WritingTasksCard({
             ].map((suggestion) => (
               <span
                 key={suggestion}
-                className="rounded-full border border-brand-bordo/10 bg-brand-creme px-3 py-1 font-serif text-[0.78rem] text-brand-tinta"
+                className="rounded-full border border-border-subtle bg-surface-1 px-3 py-1 text-[0.78rem] text-text-secondary"
               >
                 {suggestion}
               </span>
@@ -160,7 +165,7 @@ export function WritingTasksCard({
           </ul>
           {completedTasks.length > 0 ? (
             <details className="group">
-              <summary className="cursor-pointer font-serif text-[0.82rem] uppercase tracking-[0.22em] text-brand-tinta/75 outline-none marker:text-brand-bordo">
+              <summary className="cursor-pointer text-[0.78rem] font-bold uppercase tracking-[0.14em] text-text-muted outline-none marker:text-brand-primary">
                 Concluídas ({completedTasks.length})
               </summary>
               <ul className="mt-2 space-y-2">

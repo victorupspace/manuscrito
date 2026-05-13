@@ -21,6 +21,7 @@ type ProjectRow = {
   description: string | null;
   status: ProjectStatus;
   word_count: number;
+  target_words: number | null;
   created_at: string;
   updated_at: string;
   last_opened_at: string | null;
@@ -36,6 +37,7 @@ export type DocumentNodeRow = {
   content_json: unknown | null;
   content_html: string | null;
   plain_text: string | null;
+  synopsis: string | null;
   summary: string | null;
   order_index: number;
   status: DocumentStatus;
@@ -44,6 +46,11 @@ export type DocumentNodeRow = {
   reading_time: number;
   target_words: number | null;
   notes: string | null;
+  pov: string | null;
+  location: string | null;
+  tags: string[];
+  metadata: Record<string, unknown>;
+  archived_at: string | null;
   created_at: string;
   updated_at: string;
   last_saved_at: string | null;
@@ -59,6 +66,7 @@ export function mapProject(row: ProjectRow): WritingProject {
     description: row.description,
     status: row.status,
     wordCount: row.word_count,
+    targetWords: row.target_words,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     lastOpenedAt: row.last_opened_at,
@@ -76,6 +84,7 @@ export function mapDocumentNode(row: DocumentNodeRow): WritingDocumentNode {
     contentJson: row.content_json,
     contentHtml: row.content_html,
     plainText: row.plain_text,
+    synopsis: row.synopsis,
     summary: row.summary,
     orderIndex: row.order_index,
     status: row.status,
@@ -84,6 +93,11 @@ export function mapDocumentNode(row: DocumentNodeRow): WritingDocumentNode {
     readingTime: row.reading_time,
     targetWords: row.target_words,
     notes: row.notes,
+    pov: row.pov,
+    location: row.location,
+    tags: row.tags ?? [],
+    metadata: row.metadata ?? {},
+    archivedAt: row.archived_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     lastSavedAt: row.last_saved_at,
@@ -117,7 +131,7 @@ export async function getProjectWritingData({
   const { data: projectData, error: projectError } = await supabase
     .from("projects")
     .select(
-      "id, user_id, type, title, description, status, word_count, created_at, updated_at, last_opened_at",
+      "id, user_id, type, title, description, status, word_count, target_words, created_at, updated_at, last_opened_at",
     )
     .eq("id", projectId)
     .eq("user_id", userId)
@@ -136,7 +150,7 @@ export async function getProjectWritingData({
   const { data: nodesData, error: nodesError } = await supabase
     .from("document_nodes")
     .select(
-      "id, project_id, user_id, parent_id, type, title, content_json, content_html, plain_text, summary, order_index, status, word_count, character_count, reading_time, target_words, notes, created_at, updated_at, last_saved_at, last_synced_at",
+      "id, project_id, user_id, parent_id, type, title, content_json, content_html, plain_text, synopsis, summary, order_index, status, word_count, character_count, reading_time, target_words, notes, pov, location, tags, metadata, archived_at, created_at, updated_at, last_saved_at, last_synced_at",
     )
     .eq("project_id", projectId)
     .eq("user_id", userId)
@@ -163,7 +177,7 @@ export async function getProjectWritingData({
         status: "draft",
       })
       .select(
-        "id, project_id, user_id, parent_id, type, title, content_json, content_html, plain_text, summary, order_index, status, word_count, character_count, reading_time, target_words, notes, created_at, updated_at, last_saved_at, last_synced_at",
+        "id, project_id, user_id, parent_id, type, title, content_json, content_html, plain_text, synopsis, summary, order_index, status, word_count, character_count, reading_time, target_words, notes, pov, location, tags, metadata, archived_at, created_at, updated_at, last_saved_at, last_synced_at",
       )
       .single();
 

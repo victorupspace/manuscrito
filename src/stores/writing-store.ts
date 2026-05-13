@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import type { WritingAccessMode } from "@/types/editor-permissions";
-import type { WritingSyncStatus } from "@/types/writing";
+import type { ActiveWritingMode, WritingSyncStatus } from "@/types/writing";
 
 type WritingState = {
   projectId: string | null;
@@ -17,6 +17,7 @@ type WritingState = {
   readingTime: number;
   hasUnsavedChanges: boolean;
   accessMode: WritingAccessMode;
+  activeWritingMode: ActiveWritingMode;
   setProjectId: (projectId: string | null) => void;
   setCurrentDocumentNodeId: (documentNodeId: string | null) => void;
   toggleFocusMode: () => void;
@@ -33,6 +34,7 @@ type WritingState = {
   }) => void;
   setHasUnsavedChanges: (hasUnsavedChanges: boolean) => void;
   setAccessMode: (accessMode: WritingAccessMode) => void;
+  setActiveWritingMode: (mode: ActiveWritingMode) => void;
 };
 
 export const useWritingStore = create<WritingState>((set) => ({
@@ -49,6 +51,7 @@ export const useWritingStore = create<WritingState>((set) => ({
   readingTime: 0,
   hasUnsavedChanges: false,
   accessMode: "master",
+  activeWritingMode: "editor",
   setProjectId: (projectId) => set({ projectId }),
   setCurrentDocumentNodeId: (currentDocumentNodeId) =>
     set({ currentDocumentNodeId }),
@@ -69,4 +72,5 @@ export const useWritingStore = create<WritingState>((set) => ({
     set({ wordCount, characterCount, readingTime }),
   setHasUnsavedChanges: (hasUnsavedChanges) => set({ hasUnsavedChanges }),
   setAccessMode: (accessMode) => set({ accessMode }),
+  setActiveWritingMode: (activeWritingMode) => set({ activeWritingMode }),
 }));

@@ -60,9 +60,26 @@ export async function saveDocumentNodeAction(
       return { status: "error", message: error.message };
     }
 
+    const { data: projectNodes, error: projectNodesError } = await supabase
+      .from("document_nodes")
+      .select("word_count")
+      .eq("project_id", parsed.data.projectId)
+      .eq("user_id", profile.authUserId);
+
+    if (projectNodesError) {
+      return { status: "error", message: projectNodesError.message };
+    }
+
+    const projectWordCount = (projectNodes ?? []).reduce(
+      (total, row) =>
+        total + ((row as { word_count: number | null }).word_count ?? 0),
+      0,
+    );
+
     const { error: projectError } = await supabase
       .from("projects")
       .update({
+        word_count: projectWordCount,
         updated_at: savedAt,
       })
       .eq("id", parsed.data.projectId)

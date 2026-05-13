@@ -1,19 +1,21 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import type { LucideIcon } from "lucide-react";
+
+import { Icon } from "@/components/ui/icon";
 
 export function MetricCard({
   label,
   value,
   helper,
-  icon: Icon,
+  icon,
   index = 0,
 }: {
   label: string;
   value: string | number;
   helper: string;
-  icon: LucideIcon;
+  /** Nome do Material Symbols Outlined (ex.: "edit_note"). */
+  icon: string;
   index?: number;
 }) {
   const reducedMotion = useReducedMotion();
@@ -23,20 +25,20 @@ export function MetricCard({
       initial={reducedMotion ? false : { opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.28, delay: index * 0.04 }}
-      className="rounded-md border border-brand-bordo/10 bg-brand-creme/55 p-4 shadow-[0_18px_55px_-42px_rgba(31,27,22,0.45)]"
+      className="rounded-md border border-border-subtle bg-surface-1 p-4 shadow-xs transition-shadow hover:shadow-sm"
     >
       <div className="flex items-start justify-between gap-3">
-        <p className="font-serif text-[0.68rem] uppercase tracking-[0.25em] text-brand-tinta/70">
+        <p className="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-text-muted">
           {label}
         </p>
-        <span className="flex size-9 items-center justify-center rounded-md bg-brand-marfim text-brand-bordo">
-          <Icon className="size-4" />
+        <span className="flex size-9 items-center justify-center rounded-md bg-brand-primary-soft text-brand-primary">
+          <Icon name={icon} opticalSize={20} className="text-[20px]" />
         </span>
       </div>
-      <p className="mt-5 font-serif text-[2rem] italic leading-none text-brand-bordo">
+      <p className="font-num mt-4 text-[1.85rem] font-bold leading-none tracking-tight text-text-primary">
         {value}
       </p>
-      <p className="mt-2 font-serif text-[0.86rem] leading-snug text-brand-tinta">
+      <p className="mt-2 text-[0.85rem] leading-snug text-text-secondary">
         {helper}
       </p>
     </motion.article>

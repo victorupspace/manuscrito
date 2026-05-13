@@ -11,8 +11,8 @@ export function PlatformShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-dvh bg-brand-marfim text-brand-carvao">
-      <div className="mx-auto grid min-h-dvh w-full max-w-[1600px] grid-cols-1 lg:grid-cols-[18rem_1fr]">
+    <div className="min-h-dvh bg-surface-0 text-text-primary">
+      <div className="grid min-h-dvh w-full grid-cols-1 lg:grid-cols-[18rem_1fr]">
         <PlatformSidebar profile={profile} />
         <div className="min-w-0 pb-24 lg:pb-0">
           <PlatformTopbar profile={profile} />

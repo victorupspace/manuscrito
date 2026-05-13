@@ -12,6 +12,7 @@ const typeLabel: Record<WritingDocumentNode["type"], string> = {
   research: "Pesquisa",
   draft: "Rascunho",
   short_story_main: "Conto",
+  document: "Documento",
 };
 
 export function DocumentNodeItem({

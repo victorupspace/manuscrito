@@ -4,9 +4,9 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 
+import { Icon } from "@/components/ui/icon";
 import { ProjectTypeCard } from "@/components/platform/project-type-card";
 import {
   Dialog,
@@ -94,7 +94,9 @@ export function NewProjectDialog({
     });
   }
 
-  const SelectedIcon = selectedType ? PROJECT_TYPE_ICONS[selectedType] : null;
+  const selectedIconName = selectedType
+    ? PROJECT_TYPE_ICONS[selectedType]
+    : null;
 
   return (
     <>
@@ -102,24 +104,24 @@ export function NewProjectDialog({
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          "inline-flex h-10 items-center justify-center gap-2 rounded-md border border-brand-bordo bg-brand-bordo px-4 font-serif text-[0.92rem] text-brand-marfim shadow-sm transition-colors hover:bg-brand-bordo-profundo focus-visible:ring-2 focus-visible:ring-brand-bordo/35 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-marfim focus-visible:outline-none",
+          "inline-flex h-10 items-center justify-center gap-2 rounded-md bg-brand-primary px-4 text-[0.9rem] font-bold text-text-on-brand shadow-sm transition-colors hover:bg-brand-primary-hover focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-0 focus-visible:outline-none",
           triggerClassName,
         )}
       >
-        <Plus className="size-4" />
+        <Icon name="add" opticalSize={20} className="text-[18px]" />
         Novo projeto
       </button>
 
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogContent className="max-h-[min(90dvh,760px)] max-w-[calc(100%-1.25rem)] overflow-y-auto rounded-xl border border-brand-bordo/15 bg-brand-marfim p-0 text-brand-carvao shadow-2xl sm:max-w-2xl">
-          <div className="border-b border-brand-bordo/10 bg-brand-creme/60 px-5 py-5 sm:px-6">
+        <DialogContent className="max-h-[min(90dvh,760px)] max-w-[calc(100%-1.25rem)] overflow-y-auto rounded-xl border border-border-default bg-surface-elevated p-0 text-text-primary shadow-xl sm:max-w-2xl">
+          <div className="border-b border-border-subtle bg-surface-1 px-5 py-5 sm:px-6">
             <DialogHeader>
-              <DialogTitle className="font-serif text-[1.65rem] italic text-brand-bordo">
+              <DialogTitle className="text-[1.4rem] font-bold tracking-tight text-text-primary">
                 {step === "type"
                   ? "O que você quer começar?"
                   : "Dê um nome ao seu projeto."}
               </DialogTitle>
-              <DialogDescription className="font-serif text-[0.95rem] leading-relaxed text-brand-tinta">
+              <DialogDescription className="text-[0.94rem] leading-relaxed text-text-secondary">
                 {step === "type"
                   ? "Escolha o tipo de material para estruturar sua próxima ideia."
                   : "Esse nome poderá ser alterado depois."}
@@ -158,16 +160,20 @@ export function NewProjectDialog({
                   onSubmit={handleSubmit(submit)}
                   className="space-y-5"
                 >
-                  {selectedType && SelectedIcon ? (
-                    <div className="flex items-start gap-3 rounded-md border border-brand-bordo/10 bg-brand-creme/55 p-4">
-                      <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-brand-marfim text-brand-bordo">
-                        <SelectedIcon className="size-5" />
+                  {selectedType && selectedIconName ? (
+                    <div className="flex items-start gap-3 rounded-md border border-border-subtle bg-surface-1 p-4">
+                      <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-brand-primary-soft text-brand-primary">
+                        <Icon
+                          name={selectedIconName}
+                          opticalSize={24}
+                          className="text-[22px]"
+                        />
                       </span>
                       <div>
-                        <p className="font-serif text-[1rem] italic text-brand-carvao">
+                        <p className="text-[0.98rem] font-bold tracking-tight text-text-primary">
                           {PROJECT_TYPE_LABELS[selectedType]}
                         </p>
-                        <p className="mt-1 font-serif text-[0.85rem] leading-relaxed text-brand-tinta">
+                        <p className="mt-1 text-[0.85rem] leading-relaxed text-text-secondary">
                           {PROJECT_TYPE_DESCRIPTIONS[selectedType]}
                         </p>
                       </div>
@@ -179,7 +185,7 @@ export function NewProjectDialog({
                   <div className="space-y-1.5">
                     <label
                       htmlFor="project-title"
-                      className="font-serif text-[0.7rem] uppercase tracking-[0.26em] text-brand-tinta/75"
+                      className="block text-[0.72rem] font-bold uppercase tracking-[0.16em] text-text-muted"
                     >
                       Nome do projeto
                     </label>
@@ -190,14 +196,14 @@ export function NewProjectDialog({
                       aria-describedby={
                         errors.title ? "project-title-error" : undefined
                       }
-                      className="h-11 w-full rounded-md border border-brand-bordo/18 bg-brand-marfim px-3 font-serif text-[1rem] text-brand-carvao outline-none placeholder:text-brand-tinta/40 focus-visible:border-brand-bordo focus-visible:ring-2 focus-visible:ring-brand-bordo/25"
+                      className="h-11 w-full rounded-md border border-border-default bg-surface-2 px-3 text-[0.98rem] text-text-primary outline-none placeholder:text-text-muted focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-ring"
                       placeholder="Ex.: A casa no fim da rua"
                     />
                     {errors.title ? (
                       <p
                         id="project-title-error"
                         role="alert"
-                        className="font-serif text-[0.82rem] italic text-brand-bordo"
+                        className="text-[0.82rem] text-destructive"
                       >
                         {errors.title.message}
                       </p>
@@ -207,7 +213,7 @@ export function NewProjectDialog({
                   <div className="space-y-1.5">
                     <label
                       htmlFor="project-description"
-                      className="font-serif text-[0.7rem] uppercase tracking-[0.26em] text-brand-tinta/75"
+                      className="block text-[0.72rem] font-bold uppercase tracking-[0.16em] text-text-muted"
                     >
                       Breve descrição
                     </label>
@@ -215,7 +221,7 @@ export function NewProjectDialog({
                       id="project-description"
                       {...register("description")}
                       aria-invalid={errors.description ? true : undefined}
-                      className="min-h-24 w-full resize-none rounded-md border border-brand-bordo/18 bg-brand-marfim px-3 py-2.5 font-serif text-[0.98rem] leading-relaxed text-brand-carvao outline-none placeholder:text-brand-tinta/40 focus-visible:border-brand-bordo focus-visible:ring-2 focus-visible:ring-brand-bordo/25"
+                      className="min-h-24 w-full resize-none rounded-md border border-border-default bg-surface-2 px-3 py-2.5 text-[0.96rem] leading-relaxed text-text-primary outline-none placeholder:text-text-muted focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-ring"
                       placeholder="Uma frase para lembrar o centro da ideia."
                     />
                   </div>
@@ -224,29 +230,33 @@ export function NewProjectDialog({
                     <p
                       role={message.type === "error" ? "alert" : "status"}
                       className={cn(
-                        "font-serif text-[0.86rem] italic",
+                        "text-[0.86rem]",
                         message.type === "error"
-                          ? "text-brand-bordo"
-                          : "text-brand-tinta",
+                          ? "text-destructive"
+                          : "text-text-secondary",
                       )}
                     >
                       {message.text}
                     </p>
                   ) : null}
 
-                  <div className="flex flex-col-reverse gap-2 border-t border-brand-bordo/10 pt-4 sm:flex-row sm:justify-between">
+                  <div className="flex flex-col-reverse gap-2 border-t border-border-subtle pt-4 sm:flex-row sm:justify-between">
                     <button
                       type="button"
                       onClick={() => setStep("type")}
-                      className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-brand-bordo/15 px-4 font-serif text-[0.92rem] text-brand-tinta transition-colors hover:bg-brand-creme hover:text-brand-bordo focus-visible:ring-2 focus-visible:ring-brand-bordo/30 focus-visible:outline-none"
+                      className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-border-default px-4 text-[0.9rem] text-text-secondary transition-colors hover:bg-surface-3 hover:text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                     >
-                      <ArrowLeft className="size-4" />
+                      <Icon
+                        name="arrow_back"
+                        opticalSize={20}
+                        className="text-[18px]"
+                      />
                       Trocar tipo
                     </button>
                     <button
                       type="submit"
                       disabled={pending}
-                      className="inline-flex h-10 items-center justify-center rounded-md border border-brand-bordo bg-brand-bordo px-5 font-serif text-[0.95rem] text-brand-marfim transition-colors hover:bg-brand-bordo-profundo disabled:cursor-not-allowed disabled:opacity-55"
+                      className="inline-flex h-10 items-center justify-center rounded-md bg-brand-primary px-5 text-[0.92rem] font-bold text-text-on-brand transition-colors hover:bg-brand-primary-hover disabled:cursor-not-allowed disabled:opacity-55"
                     >
                       {pending ? "Criando..." : "Criar projeto"}
                     </button>
