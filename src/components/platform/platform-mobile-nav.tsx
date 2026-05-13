@@ -16,8 +16,8 @@ import {
 export function PlatformMobileNav() {
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border-subtle bg-surface-0/95 px-3 py-2 backdrop-blur-xl lg:hidden">
-      <div className="mx-auto grid max-w-md grid-cols-5 gap-1">
-        {PLATFORM_NAVIGATION.slice(0, 4).map((item) => (
+      <div className="mx-auto grid max-w-xs grid-cols-3 gap-1">
+        {PLATFORM_NAVIGATION.map((item) => (
           <Link
             key={item.href}
             href={item.href}

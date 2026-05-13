@@ -17,8 +17,8 @@ Defina em `.env.local` (nunca em código, nunca no client):
 | `BACKOFFICE_ADMIN_PASSWORD`     | servidor     | Senha aceita pelo login local do backoffice.                                      |
 | `BACKOFFICE_SESSION_SECRET`     | servidor     | Segredo HMAC para assinar o cookie de sessão. Gere com `openssl rand -base64 32`. |
 | `RESEND_API_KEY`                | servidor     | API key do Resend para emails transacionais administrativos.                      |
-| `TRANSACTIONAL_EMAIL_FROM`      | servidor     | Remetente verificado. Ex.: `Manuscrito <noreply@seudominio.com>`.                 |
-| `NEXT_PUBLIC_APP_URL`           | público      | URL pública do app usada nos links de email. Ex.: `https://manuscrito.app`.       |
+| `TRANSACTIONAL_EMAIL_FROM`      | servidor     | Remetente verificado. Ex.: `Manuscrito <noreply@pulsotech.app.br>`.               |
+| `NEXT_PUBLIC_APP_URL`           | público      | URL pública do app usada nos links de email. Ex.: `https://pulsotech.app.br`.     |
 
 > ⚠️ `SUPABASE_SERVICE_ROLE_KEY` **nunca** deve ser exposta ao cliente. O
 > módulo `src/lib/supabase/admin.ts` declara `import "server-only"`; qualquer

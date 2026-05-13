@@ -21,6 +21,8 @@ o `resetPasswordForEmail` rejeita o `redirectTo` enviado pela server action.
 ```
 http://localhost:3000/reset-password
 http://localhost:3000/login
+https://pulsotech.app.br/reset-password
+https://pulsotech.app.br/login
 https://manuscrito.app/reset-password
 https://manuscrito.app/login
 ```
