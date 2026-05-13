@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, useId } from "react";
 
+import { Icon } from "@/components/ui/icon";
 import {
   requestPasswordResetAction,
   type PasswordResetState,
@@ -14,9 +15,10 @@ const INITIAL_STATE: PasswordResetState = {};
 /**
  * Formulário de "Esqueci minha senha".
  *
- * Comportamento:
- *  - Sempre devolve a mesma mensagem ao usuário, exista ou não a conta.
- *  - O envio real do e-mail é responsabilidade do Supabase Auth.
+ * Mesma linguagem visual de `LoginForm` e `BackofficeLoginForm`: tipografia
+ * Cossette Texte (sem italic), ícones Material Symbols. Sempre devolve a
+ * mesma mensagem ao usuário independente da existência da conta — proteção
+ * anti-enumeração já implementada no servidor.
  */
 export function ForgotPasswordForm() {
   const baseId = useId();
@@ -27,16 +29,15 @@ export function ForgotPasswordForm() {
 
   const isError = state?.status === "error";
   const isOk = state?.status === "ok";
-  const feedbackId =
-    isError || isOk ? `${baseId}-feedback` : undefined;
+  const feedbackId = isError || isOk ? `${baseId}-feedback` : undefined;
 
   return (
     <form action={action} className="flex flex-col gap-5" noValidate>
       <header>
-        <h2 className="font-serif text-[1.55rem] italic leading-tight text-brand-marfim sm:text-[1.75rem]">
+        <h2 className="text-[1.4rem] font-bold leading-tight tracking-tight text-brand-marfim sm:text-[1.6rem]">
           Redefinir senha
         </h2>
-        <p className="mt-2 font-serif text-[0.92rem] leading-relaxed text-brand-marfim/75">
+        <p className="mt-2 text-[0.92rem] leading-relaxed text-brand-marfim/75">
           Informe o email da sua conta para receber as instruções.
         </p>
       </header>
@@ -44,7 +45,7 @@ export function ForgotPasswordForm() {
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor={`${baseId}-email`}
-          className="font-serif text-[0.68rem] uppercase tracking-[0.28em] text-brand-marfim/70"
+          className="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-brand-marfim/75"
         >
           Email
         </label>
@@ -64,7 +65,7 @@ export function ForgotPasswordForm() {
             required
             aria-invalid={isError ? true : undefined}
             aria-describedby={feedbackId}
-            className="min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-2.5 font-serif text-[1rem] text-brand-marfim placeholder:text-brand-marfim/35 outline-none focus:ring-0"
+            className="min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-2.5 text-[1rem] text-brand-marfim placeholder:text-brand-marfim/40 outline-none focus:ring-0"
           />
         </div>
       </div>
@@ -73,7 +74,7 @@ export function ForgotPasswordForm() {
         <p
           id={feedbackId}
           role={isError ? "alert" : "status"}
-          className="font-serif text-[0.85rem] leading-relaxed text-brand-marfim"
+          className="text-[0.88rem] leading-relaxed text-brand-marfim"
         >
           <span
             aria-hidden
@@ -89,7 +90,7 @@ export function ForgotPasswordForm() {
         aria-disabled={pending || undefined}
         aria-busy={pending || undefined}
         className={cn(
-          "group relative mt-1 inline-flex items-center justify-center gap-3 rounded-sm border border-brand-marfim bg-brand-marfim px-6 py-3.5 font-serif text-[0.98rem] text-brand-bordo transition-all duration-200 outline-none",
+          "group relative mt-1 inline-flex items-center justify-center gap-3 rounded-md bg-brand-marfim px-6 py-3.5 text-[0.95rem] font-bold text-brand-bordo transition-all duration-200 outline-none",
           "hover:bg-brand-marfim/90 focus-visible:ring-2 focus-visible:ring-brand-marfim/70 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo",
           "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-brand-marfim",
           "active:translate-y-px",
@@ -103,20 +104,19 @@ export function ForgotPasswordForm() {
         ) : (
           <>
             <span>Enviar instruções</span>
-            <span
-              aria-hidden
-              className="inline-block translate-x-0 transition-transform duration-200 group-hover:translate-x-0.5"
-            >
-              →
-            </span>
+            <Icon
+              name="arrow_forward"
+              opticalSize={20}
+              className="text-[18px] transition-transform duration-200 group-hover:translate-x-0.5"
+            />
           </>
         )}
       </button>
 
-      <p className="text-center font-serif text-[0.85rem] italic text-brand-marfim/75">
+      <p className="text-center text-[0.85rem] text-brand-marfim/75">
         <Link
           href="/login"
-          className="underline-offset-4 transition-colors outline-none hover:text-brand-marfim hover:underline focus-visible:text-brand-marfim focus-visible:underline focus-visible:ring-2 focus-visible:ring-brand-marfim/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo rounded-sm"
+          className="rounded-sm underline-offset-4 transition-colors outline-none hover:text-brand-marfim hover:underline focus-visible:text-brand-marfim focus-visible:underline focus-visible:ring-2 focus-visible:ring-brand-marfim/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo"
         >
           Voltar para o login
         </Link>

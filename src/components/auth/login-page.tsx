@@ -29,9 +29,10 @@ export function LoginPage({
         aria-labelledby="login-headline"
         className="relative isolate bg-brand-marfim text-brand-carvao"
       >
+        {/* "M" decorativo gigante no fundo — preserva a identidade editorial */}
         <span
           aria-hidden
-          className="pointer-events-none absolute -bottom-24 -left-12 hidden font-serif text-[14rem] italic leading-none text-brand-bordo/[0.05] select-none lg:block"
+          className="pointer-events-none absolute -bottom-24 -left-12 hidden font-serif text-[14rem] italic leading-none text-brand-bordo/5 select-none lg:block"
         >
           M
         </span>
@@ -48,16 +49,16 @@ export function LoginPage({
         />
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:radial-gradient(rgba(245,241,232,0.7)_1px,transparent_1px)] [background-size:18px_18px]"
+          className="pointer-events-none absolute inset-0 opacity-[0.04] bg-[radial-gradient(rgba(245,241,232,0.7)_1px,transparent_1px)] bg-size-[18px_18px]"
         />
 
-        <div className="brand-glass relative w-full max-w-md rounded-md px-7 py-9 sm:px-9 sm:py-10">
+        <div className="brand-glass relative w-full max-w-md rounded-lg px-7 py-9 sm:px-9 sm:py-10">
           <div
             aria-hidden
             className="mb-6 flex items-center justify-center gap-3 text-brand-marfim/55"
           >
             <span className="h-px w-8 bg-current opacity-60" />
-            <span className="text-[0.6rem] uppercase tracking-[0.4em]">
+            <span className="text-[0.62rem] font-bold uppercase tracking-[0.24em]">
               Acesso aprovado
             </span>
             <span className="h-px w-8 bg-current opacity-60" />
@@ -66,7 +67,7 @@ export function LoginPage({
           {notice ? (
             <p
               role="status"
-              className="mb-5 rounded-sm border border-brand-marfim/25 bg-brand-marfim/10 px-4 py-3 font-serif text-[0.85rem] leading-relaxed text-brand-marfim"
+              className="mb-5 rounded-md border border-brand-marfim/25 bg-brand-marfim/10 px-4 py-3 text-[0.85rem] leading-relaxed text-brand-marfim"
             >
               <span
                 aria-hidden

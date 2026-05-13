@@ -145,14 +145,16 @@
    * surface-3  estados ativos, navegação selecionada
    * surface-muted  blocos secundários, empty states
    * surface-elevated  modais e dialogs
-   * surface-overlay  overlays sobre vinho (glass)                       */
+   * surface-overlay  glass translúcido para uso sobre fundo vinho — NÃO
+   *                  trocar para valor opaco ou o conteúdo do card de
+   *                  login/reset-password (texto claro) fica ilegível. */
   --surface-0: #ece6d3;
   --surface-1: #f3eedc;
   --surface-2: #f8f3e3;
   --surface-3: #e4dcc4;
   --surface-muted: #e7e0cc;
   --surface-elevated: #fbf6e8;
-  --surface-overlay: rgba(245, 241, 232, 0.92);
+  --surface-overlay: rgba(245, 241, 232, 0.1);
 
   /* Bordas — escala que aparece sobre creme ---------------------------- */
   --border-subtle: rgba(31, 27, 22, 0.08);
