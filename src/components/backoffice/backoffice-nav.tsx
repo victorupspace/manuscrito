@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { href: "/backoffice", label: "Painel", exact: true },
-  { href: "/backoffice/requests", label: "Solicitações", exact: false },
+  { href: "/backoffice/requests", label: "Cadastros", exact: false },
   { href: "/backoffice/customers", label: "Clientes", exact: false },
   { href: "/backoffice/editors", label: "Editores", exact: false },
   { href: "/backoffice/subscriptions", label: "Assinaturas", exact: false },
@@ -42,9 +42,7 @@ export function BackofficeNav({
                 href={item.href}
                 className={cn(
                   "rounded-sm px-3 py-1.5 font-serif transition-colors",
-                  variant === "compact"
-                    ? "text-[0.85rem]"
-                    : "text-[0.92rem]",
+                  variant === "compact" ? "text-[0.85rem]" : "text-[0.92rem]",
                   isActive
                     ? "bg-brand-bordo/10 text-brand-bordo"
                     : "text-brand-grafite hover:bg-brand-bordo/5 hover:text-brand-bordo",

@@ -29,7 +29,7 @@ export function LandingPage() {
 
       {/* Lado direito — formulário sobre fundo vinho */}
       <section
-        aria-label="Solicitação de acesso beta"
+        aria-label="Cadastro beta"
         className="relative isolate flex items-center justify-center overflow-hidden bg-brand-bordo px-6 py-12 text-brand-marfim sm:px-10 md:px-14 lg:px-12 lg:py-14"
       >
         {/* Camadas de profundidade — gradiente + textura sutil */}
@@ -44,49 +44,49 @@ export function LandingPage() {
 
         {/* Card com glass effect + microcopy de login abaixo */}
         <div className="relative flex w-full max-w-md flex-col gap-5">
-        <div
-          className="brand-glass relative w-full rounded-lg px-6 py-8 sm:px-8 sm:py-9"
-          data-state={submitted ? "success" : "form"}
-        >
-          {/* Ornamento de página de rosto */}
           <div
-            aria-hidden
-            className="mb-6 flex items-center justify-center gap-3 text-brand-bordo/35"
+            className="brand-glass relative w-full rounded-lg px-6 py-8 sm:px-8 sm:py-9"
+            data-state={submitted ? "success" : "form"}
           >
-            <span className="h-px w-8 bg-current opacity-60" />
-            <span className="text-[0.6rem] uppercase tracking-[0.4em]">
-              Anno mmxxvi
-            </span>
-            <span className="h-px w-8 bg-current opacity-60" />
-          </div>
-
-          <div className="grid">
-            {/* Mesma área visual abriga as duas etapas — transição editorial. */}
+            {/* Ornamento de página de rosto */}
             <div
-              className={
-                "col-start-1 row-start-1 transition-all duration-500 ease-out " +
-                (submitted
-                  ? "pointer-events-none -translate-y-1 opacity-0"
-                  : "translate-y-0 opacity-100")
-              }
-              aria-hidden={submitted}
+              aria-hidden
+              className="mb-6 flex items-center justify-center gap-3 text-brand-bordo/35"
             >
-              <WaitlistForm onSuccess={() => setSubmitted(true)} />
+              <span className="h-px w-8 bg-current opacity-60" />
+              <span className="text-[0.6rem] uppercase tracking-[0.4em]">
+                Anno mmxxvi
+              </span>
+              <span className="h-px w-8 bg-current opacity-60" />
             </div>
 
-            <div
-              className={
-                "col-start-1 row-start-1 transition-all duration-500 ease-out " +
-                (submitted
-                  ? "translate-y-0 opacity-100 delay-150"
-                  : "pointer-events-none translate-y-2 opacity-0")
-              }
-              aria-hidden={!submitted}
-            >
-              <WaitlistSuccess />
+            <div className="grid">
+              {/* Mesma área visual abriga as duas etapas — transição editorial. */}
+              <div
+                className={
+                  "col-start-1 row-start-1 transition-all duration-500 ease-out " +
+                  (submitted
+                    ? "pointer-events-none -translate-y-1 opacity-0"
+                    : "translate-y-0 opacity-100")
+                }
+                aria-hidden={submitted}
+              >
+                <WaitlistForm onSuccess={() => setSubmitted(true)} />
+              </div>
+
+              <div
+                className={
+                  "col-start-1 row-start-1 transition-all duration-500 ease-out " +
+                  (submitted
+                    ? "translate-y-0 opacity-100 delay-150"
+                    : "pointer-events-none translate-y-2 opacity-0")
+                }
+                aria-hidden={!submitted}
+              >
+                <WaitlistSuccess />
+              </div>
             </div>
           </div>
-        </div>
 
           <LoginEntry tone="dark" className="justify-center text-center" />
         </div>

@@ -7,7 +7,7 @@ import type { LoginUserState } from "@/features/auth/actions/login-user";
 export const metadata = {
   title: "Entrar na plataforma — Manuscrito",
   description:
-    "Acesse sua conta aprovada e continue organizando suas histórias, livros, contos e projetos de escrita.",
+    "Acesse sua conta e continue organizando suas histórias, livros, contos e projetos de escrita.",
 };
 
 // Lê cookies Supabase para detectar usuários já logados → não pode ser
@@ -18,14 +18,11 @@ type LoginRouteProps = {
   searchParams?: Promise<{ reason?: string }>;
 };
 
-const REASON_MESSAGES: Record<
-  NonNullable<LoginUserState["reason"]>,
-  string
-> = {
+const REASON_MESSAGES: Record<NonNullable<LoginUserState["reason"]>, string> = {
   invalid_credentials:
-    "Não foi possível acessar. Verifique seus dados ou aguarde a aprovação da sua conta.",
+    "Não foi possível acessar. Verifique seus dados e tente novamente.",
   not_approved:
-    "Sua conta ainda não está liberada para acesso. Você receberá uma confirmação quando a aprovação for concluída.",
+    "Sua conta ainda não está ativa. Tente criar a conta novamente ou fale com o suporte.",
   suspended:
     "Sua conta está temporariamente suspensa. Entre em contato com o suporte.",
   removed:
@@ -50,7 +47,7 @@ function normalizeReason(
 }
 
 export default async function Login({ searchParams }: LoginRouteProps) {
-  // Se o usuário já estiver autenticado e aprovado, evita reentrar no login.
+  // Se o usuário já estiver autenticado e ativo, evita reentrar no login.
   const profile = await getCurrentUserProfile();
   if (profile.status === "ok") {
     redirect("/plataforma");

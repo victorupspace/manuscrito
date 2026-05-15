@@ -16,7 +16,7 @@ type LoginPageProps = {
  * Composição full-screen da tela de login.
  *
  * Mesma estrutura visual da landing (lado esquerdo creme, direito vinho), para
- * que o usuário aprovado sinta continuidade entre solicitar acesso e entrar.
+ * que o usuário sinta continuidade entre criar conta e entrar.
  */
 export function LoginPage({
   initialReason,
@@ -59,7 +59,7 @@ export function LoginPage({
           >
             <span className="h-px w-8 bg-current opacity-60" />
             <span className="text-[0.62rem] font-bold uppercase tracking-[0.24em]">
-              Acesso aprovado
+              Acesso à plataforma
             </span>
             <span className="h-px w-8 bg-current opacity-60" />
           </div>

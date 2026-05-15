@@ -15,7 +15,7 @@ import {
  *     (refresh de cookies inclusive) e redirecionamento para `/login` quando
  *     não houver usuário autenticado.
  *
- * A autorização "real" (verificação de aprovação em `customers`) continua
+ * A autorização "real" (verificação de conta ativa em `customers`) continua
  * sendo feita em cada server component / action via `requireApprovedUser()`.
  * Aqui só evitamos requisições desnecessárias para usuários claramente
  * deslogados.

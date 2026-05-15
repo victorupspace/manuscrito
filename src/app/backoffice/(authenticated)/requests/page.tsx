@@ -2,6 +2,7 @@ import { AdminActionButton } from "@/components/backoffice/admin-action-button";
 import { approveSignupRequestAction } from "@/features/backoffice/actions/approve-signup-request";
 import { rejectSignupRequestAction } from "@/features/backoffice/actions/reject-signup-request";
 import { getWaitlistRequests } from "@/features/backoffice/services/get-waitlist-requests";
+import type { WaitlistRequest } from "@/features/backoffice/types";
 
 export const dynamic = "force-dynamic";
 
@@ -14,20 +15,21 @@ const dateFormatter = new Intl.DateTimeFormat("pt-BR", {
 });
 
 export default async function BackofficeRequestsPage() {
-  const result = await getWaitlistRequests("pending");
+  const result = await getWaitlistRequests("all");
 
   return (
     <div className="space-y-8">
       <header className="space-y-1">
         <p className="font-serif text-[0.7rem] uppercase tracking-[0.32em] text-brand-tinta/70">
-          Solicitações
+          Cadastros
         </p>
         <h1 className="font-serif text-[1.8rem] italic text-brand-bordo">
-          Cadastros pendentes
+          Contas criadas na landing
         </h1>
         <p className="max-w-2xl font-serif text-[0.95rem] text-brand-tinta">
-          Aprove ou reprove as solicitações vindas da homepage. Cada decisão é
-          registrada no histórico administrativo.
+          Acompanhe os cadastros feitos pela homepage. As novas contas já entram
+          ativas, e registros antigos ainda pendentes podem ser decididos
+          manualmente.
         </p>
       </header>
 
@@ -50,32 +52,11 @@ export default async function BackofficeRequestsPage() {
                   {request.email} · {request.phone}
                 </p>
                 <p className="font-serif text-[0.78rem] uppercase tracking-[0.22em] text-brand-tinta/65">
-                  Recebido em {dateFormatter.format(new Date(request.createdAt))}
+                  Recebido em{" "}
+                  {dateFormatter.format(new Date(request.createdAt))}
                 </p>
               </div>
-              <div className="flex shrink-0 items-start gap-2">
-                <AdminActionButton
-                  action={async () => {
-                    "use server";
-                    return approveSignupRequestAction(request.id);
-                  }}
-                  pendingLabel="Aprovando…"
-                  variant="primary"
-                >
-                  Aprovar
-                </AdminActionButton>
-                <AdminActionButton
-                  action={async () => {
-                    "use server";
-                    return rejectSignupRequestAction(request.id);
-                  }}
-                  pendingLabel="Reprovando…"
-                  variant="danger"
-                  confirm="Confirmar reprovação desta solicitação?"
-                >
-                  Reprovar
-                </AdminActionButton>
-              </div>
+              <RequestStatus request={request} />
             </li>
           ))}
         </ul>
@@ -88,8 +69,56 @@ function EmptyState() {
   return (
     <div className="rounded-md border border-dashed border-brand-bordo/25 bg-brand-marfim/40 p-8 text-center">
       <p className="font-serif italic text-brand-tinta">
-        Nenhuma solicitação pendente no momento.
+        Nenhum cadastro vindo da landing ainda.
       </p>
+    </div>
+  );
+}
+
+function RequestStatus({ request }: { request: WaitlistRequest }) {
+  if (request.status === "pending") {
+    return (
+      <div className="flex shrink-0 items-start gap-2">
+        <AdminActionButton
+          action={async () => {
+            "use server";
+            return approveSignupRequestAction(request.id);
+          }}
+          pendingLabel="Aprovando…"
+          variant="primary"
+        >
+          Aprovar
+        </AdminActionButton>
+        <AdminActionButton
+          action={async () => {
+            "use server";
+            return rejectSignupRequestAction(request.id);
+          }}
+          pendingLabel="Reprovando…"
+          variant="danger"
+          confirm="Confirmar reprovação desta solicitação?"
+        >
+          Reprovar
+        </AdminActionButton>
+      </div>
+    );
+  }
+
+  const label = request.status === "approved" ? "Conta ativa" : "Reprovado";
+  const decidedAt = request.decidedAt
+    ? dateFormatter.format(new Date(request.decidedAt))
+    : null;
+
+  return (
+    <div className="shrink-0 text-left sm:text-right">
+      <p className="font-serif text-[0.78rem] uppercase tracking-[0.22em] text-brand-bordo">
+        {label}
+      </p>
+      {decidedAt ? (
+        <p className="mt-1 font-serif text-[0.78rem] text-brand-tinta/70">
+          {decidedAt}
+        </p>
+      ) : null}
     </div>
   );
 }

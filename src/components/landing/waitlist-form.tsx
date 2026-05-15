@@ -19,7 +19,7 @@ type WaitlistFormProps = {
 };
 
 /**
- * Formulário de waitlist da landing.
+ * Formulário de cadastro da landing.
  *
  * Paleta: todo o conteúdo vive sobre o card vinho (`brand-glass`), então
  * tudo é creme/marfim para garantir contraste WCAG AA sobre o fundo
@@ -68,10 +68,11 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
     >
       <header className="text-center">
         <h2 className="text-[1.6rem] font-bold leading-tight tracking-tight text-brand-marfim sm:text-[1.85rem]">
-          Solicite seu acesso
+          Crie sua conta
         </h2>
         <p className="mx-auto mt-2 max-w-sm text-[0.93rem] leading-relaxed text-brand-marfim/80">
-          Entre na lista beta e seja avisado quando sua conta for aprovada.
+          Cadastre-se para começar a organizar seus projetos de escrita no
+          Manuscrito.
         </p>
       </header>
 
@@ -165,7 +166,7 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
           </>
         ) : (
           <>
-            <span>Solicitar acesso</span>
+            <span>Criar conta</span>
             <Icon
               name="arrow_forward"
               opticalSize={20}
@@ -177,7 +178,7 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
 
       <div className="flex flex-col items-center gap-1.5 text-center">
         <p className="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-brand-marfim/70">
-          Vagas limitadas · Volume I
+          Cadastro beta · Volume I
         </p>
         <p className="text-[0.72rem] leading-snug text-brand-marfim/65">
           Seus dados são tratados com sigilo e criptografia, conforme a LGPD.

@@ -13,7 +13,7 @@ export function LandingCopy() {
 
         <div className="flex flex-col items-end gap-2 sm:gap-3">
           <BetaBadge tone="light" className="hidden sm:inline-flex">
-            Beta privado
+            Beta aberto
           </BetaBadge>
           <LoginEntry tone="light" className="justify-end text-right" />
         </div>
@@ -22,7 +22,7 @@ export function LandingCopy() {
       {/* Núcleo narrativo */}
       <div className="flex flex-1 flex-col justify-center">
         <BetaBadge tone="light" className="mb-6 self-start sm:hidden">
-          Beta privado
+          Beta aberto
         </BetaBadge>
 
         <h1 className="font-serif text-[2.2rem] leading-[1.08] tracking-[-0.01em] text-brand-carvao sm:text-[2.6rem] md:text-[3rem] lg:text-[3.4rem] xl:text-[3.75rem]">

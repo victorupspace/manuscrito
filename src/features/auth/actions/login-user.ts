@@ -11,22 +11,22 @@ export type LoginUserState = {
 };
 
 const GENERIC_ERROR =
-  "Não foi possível acessar. Verifique seus dados ou aguarde a aprovação da sua conta.";
+  "Não foi possível acessar. Verifique seus dados e tente novamente.";
 const NOT_APPROVED_MESSAGE =
-  "Sua conta ainda não está liberada para acesso. Você receberá uma confirmação quando a aprovação for concluída.";
+  "Sua conta ainda não está ativa. Tente criar a conta novamente ou fale com o suporte.";
 const SUSPENDED_MESSAGE =
   "Sua conta está temporariamente suspensa. Entre em contato com o suporte.";
 const REMOVED_MESSAGE =
   "Sua conta foi encerrada. Caso queira retornar, solicite novo acesso.";
 
 /**
- * Server action de login do usuário comum (escritor aprovado).
+ * Server action de login do usuário comum.
  *
  * Fluxo:
  *  1. Valida email/senha contra o schema do Zod.
  *  2. Chama `signInWithPassword` do Supabase Auth.
- *  3. Verifica se há perfil aprovado em `public.customers`.
- *  4. Se aprovado, redireciona para `/plataforma`.
+ *  3. Verifica se há perfil ativo em `public.customers`.
+ *  4. Se ativo, redireciona para `/plataforma`.
  *  5. Caso contrário, encerra a sessão e devolve erro específico.
  *
  * Mensagens nunca revelam se o email existe — manter idêntico ao padrão do

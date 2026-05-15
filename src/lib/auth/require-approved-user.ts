@@ -21,14 +21,14 @@ export type ApprovedUserProfile = {
  * Fonte de verdade
  * ────────────────
  * 1. Supabase Auth — quem o usuário diz ser (`auth.users`).
- * 2. `public.customers` — perfil operacional do usuário aprovado.
+ * 2. `public.customers` — perfil operacional do usuário cadastrado.
  *
  * Estados possíveis:
  *  - `customers.status = active` → liberado.
  *  - `customers.status = suspended|removed` → bloqueado, mensagem específica.
- *  - Sem linha em `customers` → ainda não aprovado pelo backoffice.
+ *  - Sem linha em `customers` → conta sem perfil operacional ativo.
  *
- * Sempre que retornarmos "não aprovado", encerramos a sessão para evitar que
+ * Sempre que retornarmos "sem perfil ativo", encerramos a sessão para evitar que
  * o usuário fique logado em uma conta que não pode acessar nada.
  */
 async function loadCurrentProfile(): Promise<

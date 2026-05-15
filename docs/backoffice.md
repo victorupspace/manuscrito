@@ -61,7 +61,7 @@ Reinicie `npm run dev` após alterar `.env.local`.
 | ------------------------------------ | --------- | ------------------------------------------ |
 | `/backoffice/login`                  | público   | Tela de login local.                       |
 | `/backoffice`                        | protegido | Painel com cards de visão geral.           |
-| `/backoffice/requests`               | protegido | Solicitações `pending` vindas da homepage. |
+| `/backoffice/requests`               | protegido | Histórico de cadastros vindos da homepage. |
 | `/backoffice/customers`              | protegido | Lista de clientes.                         |
 | `/backoffice/customers/[customerId]` | protegido | Ficha individual com ações.                |
 | `/backoffice/editors`                | protegido | Convites de editores + permissão.          |
@@ -78,19 +78,12 @@ A proteção é feita em duas camadas (defense-in-depth):
 
 1. O visitante envia o formulário em `/`.
 2. A server action `submitWaitlist` cria o usuário no Supabase Auth com
-   `app_metadata.approval_status = "pending"` e insere em
-   `waitlist_requests` (status `pending`).
-3. O admin abre `/backoffice/requests` e vê a solicitação.
-4. Ao clicar **Aprovar**, `approveSignupRequestAction` marca o usuário Auth
-   como aprovado, cria/ativa o registro em `customers`, cria a assinatura
-   inicial em `subscriptions`, atualiza a solicitação para `approved` e
-   registra `waitlist.approve` em `admin_audit_logs`.
-5. Se `RESEND_API_KEY` e `TRANSACTIONAL_EMAIL_FROM` estiverem configurados,
-   o sistema envia automaticamente um email “Sua conta foi aprovada” com link
-   para `/login`. Caso essas variáveis não existam, a aprovação continua
-   funcionando e o evento fica registrado na auditoria como email não enviado.
-6. Ao clicar **Reprovar**, idem com status `rejected` e ação
-   `waitlist.reject`.
+   `app_metadata.approval_status = "approved"`, cria/ativa o registro em
+   `customers`, cria a assinatura inicial em `subscriptions` e registra o
+   cadastro em `waitlist_requests` com status `approved`.
+3. O admin abre `/backoffice/requests` para consultar o histórico dos cadastros
+   feitos pela landing. Registros antigos ainda `pending` continuam podendo ser
+   aprovados ou reprovados manualmente.
 
 Também é possível cadastrar um cliente direto em `/backoffice/customers`. Esse
 fluxo cria o usuário Auth, o registro em `customers` e a assinatura inicial sem
@@ -115,8 +108,8 @@ As tabelas usadas pelo backoffice são criadas pela migration oficial. Resumo
 do contrato:
 
 ```sql
-waitlist_requests: solicitações vindas da landing.
-customers: clientes aprovados, com id vinculado a auth.users.id.
+waitlist_requests: histórico de cadastros vindos da landing.
+customers: clientes cadastrados, com id vinculado a auth.users.id.
 subscriptions: assinatura atual de cada cliente.
 editor_invites: convites e permissões de editores.
 admin_audit_logs: trilha de auditoria administrativa.

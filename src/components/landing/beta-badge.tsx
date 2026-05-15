@@ -13,7 +13,7 @@ type BetaBadgeProps = {
 export function BetaBadge({
   className,
   tone = "light",
-  children = "Beta privado",
+  children = "Beta aberto",
 }: BetaBadgeProps) {
   const palette =
     tone === "light"
@@ -28,15 +28,9 @@ export function BetaBadge({
         className,
       )}
     >
-      <span
-        aria-hidden
-        className="h-px w-4 bg-current opacity-60"
-      />
+      <span aria-hidden className="h-px w-4 bg-current opacity-60" />
       <span className="font-medium">{children}</span>
-      <span
-        aria-hidden
-        className="h-px w-4 bg-current opacity-60"
-      />
+      <span aria-hidden className="h-px w-4 bg-current opacity-60" />
     </span>
   );
 }

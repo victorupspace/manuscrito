@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export default async function BackofficeDashboardPage() {
   const [requests, customers, invites, subscriptions] = await Promise.all([
-    getWaitlistRequests("pending"),
+    getWaitlistRequests("all"),
     getCustomers(),
     getEditorInvites(),
     getSubscriptions(),
@@ -24,12 +24,9 @@ export default async function BackofficeDashboardPage() {
   }> = [
     {
       href: "/backoffice/requests",
-      label: "Solicitações pendentes",
-      value:
-        requests.status === "ok"
-          ? requests.data.length
-          : "—",
-      hint: "Novos cadastros vindos da homepage.",
+      label: "Cadastros da landing",
+      value: requests.status === "ok" ? requests.data.length : "—",
+      hint: "Histórico de contas criadas na homepage.",
       error: requests.status === "error" ? requests.message : undefined,
     },
     {
@@ -39,7 +36,7 @@ export default async function BackofficeDashboardPage() {
         customers.status === "ok"
           ? customers.data.filter((c) => c.status === "active").length
           : "—",
-      hint: "Autores com conta aprovada.",
+      hint: "Autores com conta ativa.",
       error: customers.status === "error" ? customers.message : undefined,
     },
     {
@@ -57,7 +54,8 @@ export default async function BackofficeDashboardPage() {
       label: "Assinaturas",
       value: subscriptions.status === "ok" ? subscriptions.data.length : "—",
       hint: "Planos ativos e em trial.",
-      error: subscriptions.status === "error" ? subscriptions.message : undefined,
+      error:
+        subscriptions.status === "error" ? subscriptions.message : undefined,
     },
   ];
 
@@ -71,8 +69,8 @@ export default async function BackofficeDashboardPage() {
           Visão geral
         </h1>
         <p className="max-w-2xl font-serif text-[0.95rem] text-brand-tinta">
-          Acompanhe novas solicitações de cadastro, status de clientes e
-          editores convidados.
+          Acompanhe cadastros da landing, status de clientes e editores
+          convidados.
         </p>
       </header>
 

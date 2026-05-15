@@ -12,7 +12,7 @@ export type PasswordResetState = {
 
 // Mensagem genérica intencional — não revelar se o email existe.
 const GENERIC_OK =
-  "Se o email estiver aprovado, você receberá instruções para redefinir sua senha.";
+  "Se o email estiver cadastrado, você receberá instruções para redefinir sua senha.";
 const GENERIC_ERROR =
   "Não foi possível solicitar a redefinição agora. Tente novamente em instantes.";
 

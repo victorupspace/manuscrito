@@ -10,16 +10,17 @@ export type WaitlistSubmitResult =
   | { status: "error"; message: string };
 
 /**
- * Envia uma solicitação de acesso beta.
+ * Cria uma conta a partir da landing.
  *
  * Server Action. A validação acontece no servidor (defesa em profundidade,
  * mesmo que o formulário já valide no client com Zod).
  *
  * Persistência
  * ────────────
- * Cria o usuário no Supabase Auth com status pendente em `app_metadata` e
- * insere uma solicitação em `waitlist_requests`. A senha vai direto para o
- * Supabase Auth; ela nunca é gravada em tabela pública ou metadata.
+ * Cria o usuário no Supabase Auth, ativa o perfil em `customers`, cria a
+ * assinatura inicial e mantém um registro aprovado em `waitlist_requests`
+ * para visibilidade no backoffice. A senha vai direto para o Supabase Auth;
+ * ela nunca é gravada em tabela pública ou metadata.
  */
 export async function submitWaitlist(
   input: WaitlistInput,
@@ -53,18 +54,19 @@ export async function submitWaitlist(
       if (status === "pending") {
         return {
           status: "error",
-          message: "Sua solicitação já está em análise.",
+          message: "Este e-mail já foi cadastrado. Tente entrar na plataforma.",
         };
       }
       if (status === "approved") {
         return {
           status: "error",
-          message: "Este e-mail já foi aprovado para acesso.",
+          message: "Este e-mail já possui uma conta. Acesse a plataforma.",
         };
       }
       return {
         status: "error",
-        message: "Já recebemos uma solicitação com este e-mail.",
+        message:
+          "Este e-mail não pode ser cadastrado no momento. Fale com o suporte.",
       };
     }
 
@@ -79,7 +81,7 @@ export async function submitWaitlist(
         },
         app_metadata: {
           role: "customer",
-          approval_status: "pending",
+          approval_status: "approved",
         },
       });
 
@@ -89,12 +91,82 @@ export async function submitWaitlist(
       }
       return {
         status: "error",
-        message:
-          authError?.message ??
-          "Não foi possível criar seu acesso agora. Tente novamente em instantes.",
+        message: authError?.message?.toLowerCase().includes("already")
+          ? "Este e-mail já possui uma conta. Acesse a plataforma."
+          : (authError?.message ??
+            "Não foi possível criar seu acesso agora. Tente novamente em instantes."),
       };
     }
 
+    const { error: customerError } = await supabase.from("customers").upsert(
+      {
+        id: authData.user.id,
+        full_name: fullName,
+        email,
+        phone,
+        status: "active",
+        plan: "free",
+      },
+      { onConflict: "id" },
+    );
+
+    if (customerError) {
+      await supabase.auth.admin.deleteUser(authData.user.id);
+
+      // Conflito de e-mail único: tratamos como conta já existente.
+      // Códigos do Postgres: 23505 = unique_violation.
+      if (customerError.code === "23505") {
+        return {
+          status: "error",
+          message: "Este e-mail já possui uma conta. Acesse a plataforma.",
+        };
+      }
+
+      if (process.env.NODE_ENV !== "production") {
+        console.error(
+          "[waitlist] erro Supabase ao criar cliente:",
+          customerError,
+        );
+      }
+
+      return {
+        status: "error",
+        message:
+          "Não foi possível criar sua conta agora. Tente novamente em instantes.",
+      };
+    }
+
+    const { error: subscriptionError } = await supabase
+      .from("subscriptions")
+      .upsert(
+        {
+          customer_id: authData.user.id,
+          customer_email: email,
+          customer_name: fullName,
+          plan: "free",
+          status: "trialing",
+        },
+        { onConflict: "customer_id" },
+      );
+
+    if (subscriptionError) {
+      await supabase.auth.admin.deleteUser(authData.user.id);
+
+      if (process.env.NODE_ENV !== "production") {
+        console.error(
+          "[waitlist] erro Supabase ao criar assinatura:",
+          subscriptionError,
+        );
+      }
+
+      return {
+        status: "error",
+        message:
+          "Não foi possível criar sua conta agora. Tente novamente em instantes.",
+      };
+    }
+
+    const now = new Date().toISOString();
     const { error: insertError } = await supabase
       .from("waitlist_requests")
       .insert({
@@ -102,34 +174,45 @@ export async function submitWaitlist(
         full_name: fullName,
         phone,
         email,
-        status: "pending",
+        status: "approved",
+        decided_at: now,
+        decided_by: "landing:auto-approval",
+        metadata: {
+          source: "landing",
+          auto_approved: true,
+        },
       });
 
     if (insertError) {
       await supabase.auth.admin.deleteUser(authData.user.id);
 
-      // Conflito de e-mail único: tratamos como "já está na lista".
+      // Conflito de e-mail único: tratamos como conta já existente.
       // Códigos do Postgres: 23505 = unique_violation.
       if (insertError.code === "23505") {
         return {
           status: "error",
-          message: "Já recebemos uma solicitação com este e-mail.",
+          message: "Este e-mail já possui uma conta. Acesse a plataforma.",
         };
       }
 
       if (process.env.NODE_ENV !== "production") {
-        console.error("[waitlist] erro Supabase ao inserir:", insertError);
+        console.error(
+          "[waitlist] erro Supabase ao registrar cadastro:",
+          insertError,
+        );
       }
 
       return {
         status: "error",
         message:
-          "Não foi possível enviar sua solicitação agora. Tente novamente em instantes.",
+          "Não foi possível criar sua conta agora. Tente novamente em instantes.",
       };
     }
 
     revalidatePath("/backoffice");
     revalidatePath("/backoffice/requests");
+    revalidatePath("/backoffice/customers");
+    revalidatePath("/backoffice/subscriptions");
 
     return { status: "ok" };
   } catch (err) {
@@ -139,7 +222,7 @@ export async function submitWaitlist(
     return {
       status: "error",
       message:
-        "Não foi possível enviar sua solicitação agora. Tente novamente em instantes.",
+        "Não foi possível criar sua conta agora. Tente novamente em instantes.",
     };
   }
 }

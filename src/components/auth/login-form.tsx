@@ -47,7 +47,7 @@ export function LoginForm({ initialReason, initialMessage }: LoginFormProps) {
           Acessar plataforma
         </h2>
         <p className="mt-2 text-[0.92rem] leading-relaxed text-brand-marfim/75">
-          Use o email aprovado para entrar na sua conta.
+          Use o email e a senha cadastrados para entrar na sua conta.
         </p>
       </header>
 
@@ -160,12 +160,12 @@ export function LoginForm({ initialReason, initialMessage }: LoginFormProps) {
           Esqueci minha senha
         </Link>
         <p className="text-[0.82rem] text-brand-marfim/60">
-          Ainda não fui aprovado?{" "}
+          Ainda não tenho conta?{" "}
           <Link
             href="/"
             className="rounded-sm font-bold text-brand-marfim/80 underline-offset-4 transition-colors outline-none hover:text-brand-marfim hover:underline focus-visible:text-brand-marfim focus-visible:underline focus-visible:ring-2 focus-visible:ring-brand-marfim/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo"
           >
-            Solicitar acesso beta
+            Criar conta
           </Link>
         </p>
       </div>

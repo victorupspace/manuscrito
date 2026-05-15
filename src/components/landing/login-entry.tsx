@@ -15,9 +15,9 @@ type LoginEntryProps = {
 /**
  * Microcopy editorial com chamada para o login.
  *
- * Discreto por design: não compete com o formulário principal de solicitação
- * de acesso. Aparece duas vezes na landing:
- *  - no topo direito do lado creme (chamada imediata para quem já tem acesso);
+ * Discreto por design: não compete com o formulário principal de cadastro.
+ * Aparece duas vezes na landing:
+ *  - no topo direito do lado creme (chamada imediata para quem já tem conta);
  *  - logo abaixo do formulário, no lado vinho, como tom de "confirmação".
  */
 export function LoginEntry({ tone = "light", className }: LoginEntryProps) {
@@ -31,7 +31,7 @@ export function LoginEntry({ tone = "light", className }: LoginEntryProps) {
         className,
       )}
     >
-      <span className="italic">Já tem acesso aprovado?</span>
+      <span className="italic">Já tem conta?</span>
       <Link
         href="/login"
         className={cn(

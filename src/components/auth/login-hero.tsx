@@ -26,13 +26,13 @@ export function LoginHero() {
         </Link>
 
         <BetaBadge tone="light" className="hidden sm:inline-flex">
-          Beta privado
+          Beta aberto
         </BetaBadge>
       </header>
 
       <div className="flex flex-1 flex-col justify-center">
         <BetaBadge tone="light" className="mb-6 self-start sm:hidden">
-          Beta privado
+          Beta aberto
         </BetaBadge>
 
         <h1 className="font-serif text-[2.2rem] leading-[1.08] tracking-[-0.01em] text-brand-carvao sm:text-[2.6rem] md:text-[3rem] lg:text-[3.4rem] xl:text-[3.6rem]">
@@ -41,8 +41,8 @@ export function LoginHero() {
         </h1>
 
         <p className="mt-5 max-w-xl font-serif text-base leading-[1.7] text-brand-grafite sm:text-[1.05rem] md:text-[1.1rem]">
-          Acesse sua conta aprovada e continue organizando suas histórias,
-          livros, contos e projetos de escrita.
+          Acesse sua conta e continue organizando suas histórias, livros, contos
+          e projetos de escrita.
         </p>
 
         <p className="mt-6 max-w-md font-serif text-[0.78rem] uppercase tracking-[0.28em] text-brand-tinta">

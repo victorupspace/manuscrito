@@ -5,9 +5,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-export const isSupabaseAdminConfigured = Boolean(
-  supabaseUrl && serviceRoleKey,
-);
+export const isSupabaseAdminConfigured = Boolean(supabaseUrl && serviceRoleKey);
 
 /**
  * Cliente Supabase com a service role key.
@@ -17,7 +15,7 @@ export const isSupabaseAdminConfigured = Boolean(
  * acima fará o build falhar caso isso aconteça.
  *
  * Necessário enquanto não há políticas RLS específicas para o backoffice e
- * para fluxos administrativos como aprovar/rejeitar solicitações de cadastro.
+ * para fluxos administrativos como gerenciar cadastros e clientes.
  */
 export function createSupabaseAdminClient(): SupabaseClient {
   if (!supabaseUrl || !serviceRoleKey) {

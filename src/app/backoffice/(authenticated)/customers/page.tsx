@@ -28,7 +28,7 @@ export default async function BackofficeCustomersPage() {
           Clientes
         </p>
         <h1 className="font-serif text-[1.8rem] italic text-brand-bordo">
-          Autores aprovados
+          Autores cadastrados
         </h1>
         <p className="max-w-2xl font-serif text-[0.95rem] text-brand-tinta">
           Acesse a ficha de cada cliente para enviar redefinição de senha,

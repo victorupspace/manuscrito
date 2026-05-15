@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /**
- * Schema do formulário de login do usuário comum (escritor aprovado).
+ * Schema do formulário de login do usuário comum.
  *
  * Não confundir com o login do backoffice, que utiliza schema próprio em
  * `@/features/backoffice/auth`.
