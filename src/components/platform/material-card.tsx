@@ -61,6 +61,11 @@ export function MaterialCard({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
+  function openDeleteDialog() {
+    setErrorMessage(null);
+    setConfirmOpen(true);
+  }
+
   function handleDelete() {
     setErrorMessage(null);
     startTransition(async () => {
@@ -95,22 +100,22 @@ export function MaterialCard({
               aria-label={`Mais opções para ${project.title}`}
               className="inline-flex size-8 items-center justify-center rounded-md text-text-muted transition-colors hover:bg-surface-3 hover:text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none data-[state=open]:bg-surface-3 data-[state=open]:text-text-primary"
             >
-              <Icon name="more_horiz" opticalSize={20} className="text-[20px]" />
+              <Icon
+                name="more_horiz"
+                opticalSize={20}
+                className="text-[20px]"
+              />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
               <DropdownMenuItem
+                onClick={openDeleteDialog}
                 onSelect={(event) => {
                   event.preventDefault();
-                  setErrorMessage(null);
-                  setConfirmOpen(true);
+                  openDeleteDialog();
                 }}
                 className="cursor-pointer text-[0.9rem] text-destructive focus:bg-destructive/10 focus:text-destructive"
               >
-                <Icon
-                  name="delete"
-                  opticalSize={20}
-                  className="text-[18px]"
-                />
+                <Icon name="delete" opticalSize={20} className="text-[18px]" />
                 Excluir material
               </DropdownMenuItem>
             </DropdownMenuContent>

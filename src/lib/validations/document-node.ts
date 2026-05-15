@@ -41,6 +41,11 @@ export const documentArchiveSchema = z.object({
   projectId: z.string().uuid(),
 });
 
+export const documentDeleteSchema = z.object({
+  documentNodeId: z.string().uuid(),
+  projectId: z.string().uuid(),
+});
+
 export const documentSynopsisSchema = z.object({
   documentNodeId: z.string().uuid(),
   synopsis: z.string().trim().max(2400).nullable().optional(),
@@ -50,4 +55,5 @@ export type DocumentNodeCreateInput = z.infer<typeof documentNodeCreateSchema>;
 export type DocumentNodeSaveInput = z.infer<typeof documentNodeSaveSchema>;
 export type DocumentOrderInput = z.infer<typeof documentOrderSchema>;
 export type DocumentArchiveInput = z.infer<typeof documentArchiveSchema>;
+export type DocumentDeleteInput = z.infer<typeof documentDeleteSchema>;
 export type DocumentSynopsisInput = z.infer<typeof documentSynopsisSchema>;

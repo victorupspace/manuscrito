@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { requireApprovedUser } from "@/lib/auth/require-approved-user";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export type DeleteProjectResult =
   | { status: "ok" }
@@ -14,9 +14,9 @@ export type DeleteProjectResult =
  *
  * Segurança
  * ─────────
- * A RLS de `projects` já restringe DELETE a `auth.uid() = user_id`. O filtro
- * `.eq("user_id", profile.authUserId)` aqui é defesa em profundidade — garante
- * que mesmo se a policy for relaxada no futuro, esta action continua segura.
+ * A action roda no servidor e primeiro confirma que o projeto pertence ao
+ * usuário autenticado. Depois usa service role para executar a remoção de forma
+ * consistente, sem depender de cascatas/RLS disparadas a partir do client.
  *
  * Observação sobre tarefas vinculadas: a coluna `writing_tasks.project_id`
  * tem `on delete set null`, então tarefas associadas ao projeto serão
@@ -34,19 +34,20 @@ export async function deleteProjectAction(
   }
 
   try {
-    const supabase = await createSupabaseServerClient();
-    const { data, error } = await supabase
+    const supabase = createSupabaseAdminClient();
+
+    const { data: project, error: projectError } = await supabase
       .from("projects")
-      .delete()
+      .select("id")
       .eq("id", projectId)
       .eq("user_id", profile.authUserId)
-      .select("id");
+      .maybeSingle();
 
-    if (error) {
-      return { status: "error", message: error.message };
+    if (projectError) {
+      return { status: "error", message: projectError.message };
     }
 
-    if (!data?.length) {
+    if (!project) {
       return {
         status: "error",
         message:
@@ -54,7 +55,28 @@ export async function deleteProjectAction(
       };
     }
 
+    const { error: tasksError } = await supabase
+      .from("writing_tasks")
+      .update({ project_id: null })
+      .eq("project_id", projectId)
+      .eq("user_id", profile.authUserId);
+
+    if (tasksError) {
+      return { status: "error", message: tasksError.message };
+    }
+
+    const { error: deleteError } = await supabase
+      .from("projects")
+      .delete()
+      .eq("id", projectId)
+      .eq("user_id", profile.authUserId);
+
+    if (deleteError) {
+      return { status: "error", message: deleteError.message };
+    }
+
     revalidatePath("/plataforma");
+    revalidatePath(`/plataforma/escrita/${projectId}`);
 
     return { status: "ok" };
   } catch (err) {

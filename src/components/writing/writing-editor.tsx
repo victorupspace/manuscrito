@@ -31,6 +31,24 @@ type WritingEditorProps = {
   }) => void;
 };
 
+type EditorContentState = {
+  documentNodeId: string;
+  contentJson: JSONContent;
+  contentHtml: string;
+  plainText: string;
+};
+
+function getEditorContentState(
+  document: WritingDocumentNode,
+): EditorContentState {
+  return {
+    documentNodeId: document.id,
+    contentJson: normalizeTiptapContent(document.contentJson),
+    contentHtml: document.contentHtml ?? "",
+    plainText: document.plainText ?? "",
+  };
+}
+
 export function WritingEditor({
   userId,
   projectId,
@@ -46,15 +64,9 @@ export function WritingEditor({
   const focusMode = useWritingStore((state) => state.focusMode);
   const toggleFocusMode = useWritingStore((state) => state.toggleFocusMode);
   const setStats = useWritingStore((state) => state.setStats);
-  const [content, setContent] = useState<{
-    contentJson: JSONContent;
-    contentHtml: string;
-    plainText: string;
-  }>(() => ({
-    contentJson: normalizeTiptapContent(document.contentJson),
-    contentHtml: document.contentHtml ?? "",
-    plainText: document.plainText ?? "",
-  }));
+  const [content, setContent] = useState<EditorContentState>(() =>
+    getEditorContentState(document),
+  );
 
   const editable = accessMode === "master" || accessMode === "editor";
   const initialContent = useMemo(
@@ -82,6 +94,7 @@ export function WritingEditor({
     onUpdate: ({ editor }) => {
       const plainText = editor.getText();
       const next = {
+        documentNodeId: document.id,
         contentJson: editor.getJSON(),
         contentHtml: editor.getHTML(),
         plainText,
@@ -95,11 +108,12 @@ export function WritingEditor({
     if (!editor) return;
     const plainText = editor.getText();
     setContent({
+      documentNodeId: document.id,
       contentJson: editor.getJSON(),
       contentHtml: editor.getHTML(),
       plainText,
     });
-  }, [editor]);
+  }, [document.id, editor]);
 
   useWritingShortcuts({
     editor,
@@ -111,7 +125,7 @@ export function WritingEditor({
     userId,
     documentType: document.type,
     online,
-    enabled: editable,
+    enabled: editable && content.documentNodeId === document.id,
     payload: {
       documentNodeId: document.id,
       projectId,

@@ -9,6 +9,8 @@ import { useWritingStore } from "@/stores/writing-store";
 import type { DocumentNodeType } from "@/constants/document-node-types";
 import type { DocumentNodeSaveInput } from "@/lib/validations/document-node";
 
+let flushingDocumentQueue = false;
+
 type UseWritingAutosaveOptions = {
   payload: DocumentNodeSaveInput;
   userId: string;
@@ -18,6 +20,88 @@ type UseWritingAutosaveOptions = {
   remoteDebounceMs?: number;
   online?: boolean;
 };
+
+function isDocumentSaveInput(
+  payload: unknown,
+): payload is DocumentNodeSaveInput {
+  if (!payload || typeof payload !== "object") return false;
+
+  const candidate = payload as Partial<DocumentNodeSaveInput>;
+  return (
+    typeof candidate.documentNodeId === "string" &&
+    typeof candidate.projectId === "string" &&
+    typeof candidate.title === "string" &&
+    typeof candidate.contentHtml === "string" &&
+    typeof candidate.plainText === "string"
+  );
+}
+
+async function clearQueuedDocumentUpdates(documentNodeId: string) {
+  const queuedItems = await localDb.syncQueue
+    .where("entityId")
+    .equals(documentNodeId)
+    .toArray();
+
+  const queuedDocumentUpdates = queuedItems.filter(
+    (item) => item.entity === "documentNode" && item.operation === "update",
+  );
+
+  if (queuedDocumentUpdates.length === 0) return;
+
+  await localDb.syncQueue.bulkDelete(
+    queuedDocumentUpdates.map((item) => item.id),
+  );
+}
+
+async function flushQueuedDocumentUpdates() {
+  if (flushingDocumentQueue) return;
+  flushingDocumentQueue = true;
+
+  try {
+    const queuedItems = await localDb.syncQueue
+      .where("entity")
+      .equals("documentNode")
+      .toArray();
+    const latestUpdatesByDocument = new Map<
+      string,
+      (typeof queuedItems)[number]
+    >();
+
+    for (const item of queuedItems) {
+      if (item.operation !== "update" || !isDocumentSaveInput(item.payload)) {
+        continue;
+      }
+
+      const current = latestUpdatesByDocument.get(item.entityId);
+      if (!current || item.createdAt > current.createdAt) {
+        latestUpdatesByDocument.set(item.entityId, item);
+      }
+    }
+
+    const latestUpdates = Array.from(latestUpdatesByDocument.values()).sort(
+      (a, b) => a.createdAt.localeCompare(b.createdAt),
+    );
+
+    for (const item of latestUpdates) {
+      if (!isDocumentSaveInput(item.payload)) continue;
+
+      const result = await syncLocalDocumentAction(item.payload);
+
+      if (result.status === "ok") {
+        await clearQueuedDocumentUpdates(item.entityId);
+        continue;
+      }
+
+      await localDb.syncQueue.update(item.id, {
+        attempts: item.attempts + 1,
+        lastError: result.message,
+        updatedAt: new Date().toISOString(),
+      });
+    }
+  } finally {
+    flushingDocumentQueue = false;
+  }
+}
 
 export function useWritingAutosave({
   payload,
@@ -113,6 +197,9 @@ export function useWritingAutosave({
       setSyncStatus("syncing");
       const result = await syncLocalDocumentAction(latestPayloadRef.current);
       if (result.status === "ok") {
+        await clearQueuedDocumentUpdates(
+          latestPayloadRef.current.documentNodeId,
+        );
         markRemoteSynced(result.savedAt);
         return;
       }
@@ -137,4 +224,10 @@ export function useWritingAutosave({
     setSyncStatus,
     userId,
   ]);
+
+  useEffect(() => {
+    if (!enabled || !online) return;
+
+    void flushQueuedDocumentUpdates();
+  }, [enabled, online]);
 }

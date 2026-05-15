@@ -137,6 +137,7 @@ export function WritingShell({
                 onChange={setTitle}
               />
               <WritingEditor
+                key={activeDocument.id}
                 userId={project.userId}
                 projectId={project.id}
                 document={activeDocument}
