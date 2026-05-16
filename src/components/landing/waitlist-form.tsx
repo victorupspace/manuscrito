@@ -67,10 +67,10 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
       aria-describedby={serverError ? `${baseId}-server-error` : undefined}
     >
       <header className="text-center">
-        <h2 className="text-[1.6rem] font-bold leading-tight tracking-tight text-brand-marfim sm:text-[1.85rem]">
+        <h2 className="text-[1.5rem] font-bold leading-tight tracking-tight text-brand-marfim sm:text-[1.8rem]">
           Crie sua conta
         </h2>
-        <p className="mx-auto mt-2 max-w-sm text-[0.93rem] leading-relaxed text-brand-marfim/80">
+        <p className="mx-auto mt-2 max-w-sm text-[0.9rem] leading-relaxed text-brand-marfim/80 sm:text-[0.93rem]">
           Cadastre-se para começar a organizar seus projetos de escrita no
           Manuscrito.
         </p>
@@ -229,7 +229,7 @@ const Field = forwardRef<HTMLInputElement, FieldProps>(function Field(
       </label>
       <div
         className={cn(
-          "group/field flex min-h-11 items-center gap-2 rounded-md border border-brand-marfim/25 bg-brand-marfim/95 px-3 transition-colors",
+          "group/field flex min-h-12 items-center gap-2 rounded-md border border-brand-marfim/25 bg-brand-marfim/95 px-3 transition-colors",
           "focus-within:border-brand-marfim focus-within:bg-brand-marfim focus-within:ring-2 focus-within:ring-brand-marfim/35",
           error
             ? "border-brand-marfim/70 bg-brand-marfim ring-2 ring-brand-marfim/30"
@@ -314,7 +314,7 @@ function PasswordField({
       </label>
       <div
         className={cn(
-          "group/field flex min-h-11 items-center gap-2 rounded-md border border-brand-marfim/25 bg-brand-marfim/95 px-3 transition-colors",
+          "group/field flex min-h-12 items-center gap-2 rounded-md border border-brand-marfim/25 bg-brand-marfim/95 px-3 transition-colors",
           "focus-within:border-brand-marfim focus-within:bg-brand-marfim focus-within:ring-2 focus-within:ring-brand-marfim/35",
           error
             ? "border-brand-marfim/70 bg-brand-marfim ring-2 ring-brand-marfim/30"

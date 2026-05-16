@@ -20,7 +20,7 @@ export function LandingPage() {
         {/* Marca d'água decorativa, sutil */}
         <span
           aria-hidden
-          className="pointer-events-none absolute -bottom-24 -left-12 hidden font-serif text-[14rem] italic leading-none text-brand-bordo/[0.05] select-none lg:block"
+          className="pointer-events-none absolute -bottom-24 -left-12 hidden font-serif text-[14rem] italic leading-none text-brand-bordo/[0.05] select-none lg:block xl:text-[16rem]"
         >
           M
         </span>
@@ -30,7 +30,7 @@ export function LandingPage() {
       {/* Lado direito — formulário sobre fundo vinho */}
       <section
         aria-label="Cadastro beta"
-        className="relative isolate flex items-center justify-center overflow-hidden bg-brand-bordo px-6 py-12 text-brand-marfim sm:px-10 md:px-14 lg:px-12 lg:py-14"
+        className="relative isolate flex items-center justify-center overflow-hidden bg-brand-bordo px-5 py-10 text-brand-marfim sm:px-10 sm:py-12 md:px-14 lg:px-12 lg:py-14"
       >
         {/* Camadas de profundidade — gradiente + textura sutil */}
         <span
@@ -45,16 +45,16 @@ export function LandingPage() {
         {/* Card com glass effect + microcopy de login abaixo */}
         <div className="relative flex w-full max-w-md flex-col gap-5">
           <div
-            className="brand-glass relative w-full rounded-lg px-6 py-8 sm:px-8 sm:py-9"
+            className="brand-glass relative w-full rounded-lg px-5 py-7 sm:px-8 sm:py-9"
             data-state={submitted ? "success" : "form"}
           >
             {/* Ornamento de página de rosto */}
             <div
               aria-hidden
-              className="mb-6 flex items-center justify-center gap-3 text-brand-bordo/35"
+              className="mb-6 flex items-center justify-center gap-3 text-brand-marfim/45"
             >
               <span className="h-px w-8 bg-current opacity-60" />
-              <span className="text-[0.6rem] uppercase tracking-[0.4em]">
+              <span className="text-[0.6rem] font-bold uppercase tracking-[0.4em]">
                 Anno mmxxvi
               </span>
               <span className="h-px w-8 bg-current opacity-60" />

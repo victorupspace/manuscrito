@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { BrandWordmark } from "@/components/brand/brand-wordmark";
 import { ResetPasswordForm } from "@/components/auth/reset-password-form";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -74,28 +75,35 @@ export default async function ResetPasswordPage({
   }
 
   return (
-    <main className="relative flex min-h-dvh w-full items-center justify-center overflow-hidden bg-brand-bordo px-6 py-12 text-brand-marfim sm:px-10">
+    <main className="relative flex min-h-dvh w-full items-center justify-center overflow-hidden bg-brand-bordo px-5 py-10 text-brand-marfim sm:px-10 sm:py-12">
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_30%_0%,rgba(245,241,232,0.10),transparent_55%),radial-gradient(120%_120%_at_100%_100%,rgba(0,0,0,0.45),transparent_55%)]"
       />
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:radial-gradient(rgba(245,241,232,0.7)_1px,transparent_1px)] [background-size:18px_18px]"
+        className="pointer-events-none absolute inset-0 opacity-[0.04] bg-[radial-gradient(rgba(245,241,232,0.7)_1px,transparent_1px)] bg-size-[18px_18px]"
       />
 
-      <div className="brand-glass relative w-full max-w-md rounded-md px-7 py-9 sm:px-9 sm:py-10">
-        <div className="mb-6 flex items-center justify-between">
-          <Link
+      <div className="brand-glass relative w-full max-w-md rounded-lg px-5 py-7 sm:px-8 sm:py-9">
+        <div className="mb-6 flex items-start justify-between gap-4">
+          <BrandWordmark
             href="/"
-            aria-label="Manuscrito — voltar à página inicial"
-            className="font-serif italic text-xl text-brand-marfim outline-none focus-visible:ring-2 focus-visible:ring-brand-marfim/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo rounded-sm"
-          >
-            Manuscrito
-          </Link>
-          <span className="font-serif text-[0.6rem] uppercase tracking-[0.4em] text-brand-marfim/55">
-            Anno mmxxvi
+            tone="light"
+            size="sm"
+            subtitle="Anno mmxxvi"
+          />
+        </div>
+
+        <div
+          aria-hidden
+          className="mb-6 flex items-center justify-center gap-3 text-brand-marfim/45"
+        >
+          <span className="h-px w-8 bg-current opacity-60" />
+          <span className="text-[0.6rem] font-bold uppercase tracking-[0.4em]">
+            Nova senha
           </span>
+          <span className="h-px w-8 bg-current opacity-60" />
         </div>
 
         {linkError ? (
@@ -110,14 +118,14 @@ export default async function ResetPasswordPage({
 
 function ExpiredLinkPanel({ message }: { message: string }) {
   return (
-    <div className="flex flex-col gap-5">
-      <header>
-        <h2 className="font-serif text-[1.55rem] italic leading-tight text-brand-marfim sm:text-[1.75rem]">
+    <div className="flex flex-col gap-4">
+      <header className="text-center">
+        <h2 className="text-[1.5rem] font-bold leading-tight tracking-tight text-brand-marfim sm:text-[1.8rem]">
           Link inválido
         </h2>
         <p
           role="alert"
-          className="mt-3 font-serif text-[0.92rem] leading-relaxed text-brand-marfim/80"
+          className="mx-auto mt-2 max-w-sm text-[0.9rem] leading-relaxed text-brand-marfim/80 sm:text-[0.93rem]"
         >
           {message}
         </p>
@@ -125,7 +133,7 @@ function ExpiredLinkPanel({ message }: { message: string }) {
 
       <Link
         href="/forgot-password"
-        className="group relative mt-1 inline-flex items-center justify-center gap-3 rounded-sm border border-brand-marfim bg-brand-marfim px-6 py-3.5 font-serif text-[0.98rem] text-brand-bordo transition-all duration-200 outline-none hover:bg-brand-marfim/90 focus-visible:ring-2 focus-visible:ring-brand-marfim/70 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo active:translate-y-px"
+        className="group relative mt-1 inline-flex items-center justify-center gap-3 rounded-md bg-brand-marfim px-6 py-3.5 text-[0.95rem] font-bold text-brand-bordo shadow-sm transition-all duration-200 outline-none hover:bg-brand-bordo-profundo hover:text-brand-marfim focus-visible:ring-2 focus-visible:ring-brand-marfim/70 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo active:translate-y-px"
       >
         Solicitar novo email
         <span
@@ -136,12 +144,12 @@ function ExpiredLinkPanel({ message }: { message: string }) {
         </span>
       </Link>
 
-      <p className="text-center font-serif text-[0.85rem] italic text-brand-marfim/75">
+      <p className="mt-2 text-center text-[0.82rem] text-brand-marfim/65">
         <Link
           href="/login"
-          className="underline-offset-4 transition-colors outline-none hover:text-brand-marfim hover:underline focus-visible:text-brand-marfim focus-visible:underline focus-visible:ring-2 focus-visible:ring-brand-marfim/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo rounded-sm"
+          className="inline-flex items-center gap-1.5 rounded-sm font-bold text-brand-marfim underline-offset-4 transition-colors outline-none hover:underline focus-visible:underline focus-visible:ring-2 focus-visible:ring-brand-marfim/60 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bordo"
         >
-          Voltar para o login
+          <span aria-hidden>←</span> Voltar para o login
         </Link>
       </p>
     </div>

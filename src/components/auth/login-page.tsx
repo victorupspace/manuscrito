@@ -41,7 +41,7 @@ export function LoginPage({
 
       <section
         aria-label="Entrar na plataforma"
-        className="relative isolate flex items-center justify-center overflow-hidden bg-brand-bordo px-6 py-12 text-brand-marfim sm:px-10 md:px-14 lg:px-12 lg:py-14"
+        className="relative isolate flex items-center justify-center overflow-hidden bg-brand-bordo px-5 py-10 text-brand-marfim sm:px-10 sm:py-12 md:px-14 lg:px-12 lg:py-14"
       >
         <span
           aria-hidden
@@ -52,13 +52,13 @@ export function LoginPage({
           className="pointer-events-none absolute inset-0 opacity-[0.04] bg-[radial-gradient(rgba(245,241,232,0.7)_1px,transparent_1px)] bg-size-[18px_18px]"
         />
 
-        <div className="brand-glass relative w-full max-w-md rounded-lg px-7 py-9 sm:px-9 sm:py-10">
+        <div className="brand-glass relative w-full max-w-md rounded-lg px-5 py-7 sm:px-8 sm:py-9">
           <div
             aria-hidden
-            className="mb-6 flex items-center justify-center gap-3 text-brand-marfim/55"
+            className="mb-6 flex items-center justify-center gap-3 text-brand-marfim/45"
           >
             <span className="h-px w-8 bg-current opacity-60" />
-            <span className="text-[0.62rem] font-bold uppercase tracking-[0.24em]">
+            <span className="text-[0.6rem] font-bold uppercase tracking-[0.4em]">
               Acesso à plataforma
             </span>
             <span className="h-px w-8 bg-current opacity-60" />
@@ -67,13 +67,13 @@ export function LoginPage({
           {notice ? (
             <p
               role="status"
-              className="mb-5 rounded-md border border-brand-marfim/25 bg-brand-marfim/10 px-4 py-3 text-[0.85rem] leading-relaxed text-brand-marfim"
+              className="mb-5 flex items-center gap-2 rounded-md border border-brand-marfim/25 bg-brand-marfim/10 px-3 py-2.5 text-[0.86rem] leading-relaxed text-brand-marfim"
             >
               <span
                 aria-hidden
-                className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-brand-marfim align-middle"
+                className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-marfim"
               />
-              {notice}
+              <span>{notice}</span>
             </p>
           ) : null}
 
